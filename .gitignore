@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Runtime / local state
+.port
+export/tmp/
+
+# Secrets — never commit real API tokens. See data/config.example.json for the template.
+data/config.json
+
+# Working data that changes constantly and isn't meaningful to diff/version
+data/quotations.db
+data/backup/

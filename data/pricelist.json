@@ -1,0 +1,1246 @@
+[
+  {
+    "name": "StratoView PRO",
+    "sheet": "MULTIPROBE-STRATOVIEW",
+    "abbrev": "SV",
+    "items": [
+      {
+        "code": "SV-AS",
+        "desc": "Base module for server data agregation to collect data and perform monitoring - per aggregation server",
+        "desc_short": "Base module for server data agregation to collect data and perform monitoring - per aggregation server",
+        "price": 8400.0
+      },
+      {
+        "code": "SV-SVQE",
+        "desc": "Extension: Standard QoE video analyzer (Black screen, Frozen video, Decodable Video) - per video",
+        "desc_short": "Extension: Standard QoE video analyzer (Black screen, Frozen video, Decodable Video) - per video",
+        "price": 150.0
+      },
+      {
+        "code": "SV-EVQE",
+        "desc": "Extension: Extended QoE video analyzer (Standard analyzer + Compression Blocking) - per video",
+        "desc_short": "Extension: Extended QoE video analyzer (Standard analyzer + Compression Blocking) - per video",
+        "price": 300.0
+      },
+      {
+        "code": "SV-KVQE",
+        "desc": "Extension: Keyframe QoE video analyzer (Standard analyzer via Keyframe decoding) - per video",
+        "desc_short": "Extension: Keyframe QoE video analyzer (Standard analyzer via Keyframe decoding) - per video",
+        "price": 75.0
+      },
+      {
+        "code": "SV-SAQE",
+        "desc": "Extension: Standard QoE audio analyzer (Silence, Overall, Decodable Audio) - per audio",
+        "desc_short": "Extension: Standard QoE audio analyzer (Silence, Overall, Decodable Audio) - per audio",
+        "price": 150.0
+      },
+      {
+        "code": "SV-EAQE",
+        "desc": "Extension: Extended QoE audio analyzer (Standard analyzer + EBU-R 128 Loudness Control) - per audio",
+        "desc_short": "Extension: Extended QoE audio analyzer (Standard analyzer + EBU-R 128 Loudness Control) - per audio",
+        "price": 300.0
+      },
+      {
+        "code": "SV-SQS",
+        "desc": "Extension: QoS analyzer (PSI/SI, TR101290, MDI, SDI, SDI over IP, etc) - per service",
+        "desc_short": "Extension: QoS analyzer (PSI/SI, TR101290, MDI, SDI, SDI over IP, etc) - per service",
+        "price": 75.0
+      },
+      {
+        "code": "SV-OTQS",
+        "desc": "Extension: OTT-metric analyzer (Master Playlist, Media playlist metrics) - per profile",
+        "desc_short": "Extension: OTT-metric analyzer (Master Playlist, Media playlist metrics) - per profile",
+        "price": 200.0
+      },
+      {
+        "code": "SV-DRM",
+        "desc": "Extension: working with DRM encrypted streams - per aggregation server",
+        "desc_short": "Extension: working with DRM encrypted streams - per aggregation server",
+        "price": 2000.0
+      },
+      {
+        "code": "SV-META",
+        "desc": "Extension: Metadata analyzer (SCTE-104/35, Teletext, Subtitles) - per stream",
+        "desc_short": "Extension: Metadata analyzer (SCTE-104/35, Teletext, Subtitles) - per stream",
+        "price": 280.0
+      },
+      {
+        "code": "SV-T2MI",
+        "desc": "Extension: DVB-T2 MI Remultiplexer - per plp",
+        "desc_short": "Extension: DVB-T2 MI Remultiplexer - per plp",
+        "price": 1300.0
+      },
+      {
+        "code": "SV-COR",
+        "desc": "Extension: Data correlation and SLA monitoring subsystem  - per 10 virtual correlation services",
+        "desc_short": "Extension: Data correlation and SLA monitoring subsystem  - per 10 virtual correlation services",
+        "price": 5600.0
+      },
+      {
+        "code": "SV-STAT",
+        "desc": "Extension: Reports subsystem - per aggregation server",
+        "desc_short": "Extension: Reports subsystem - per aggregation server",
+        "price": 2800.0
+      },
+      {
+        "code": "SV-COD",
+        "desc": "Extension: Source video and audio (mosaic) encoding - per input",
+        "desc_short": "Extension: Source video and audio (mosaic) encoding - per input",
+        "price": 560.0
+      },
+      {
+        "code": "SV-RECS",
+        "desc": "Extension: Complience recording TV/Radio sIgnals with the ability to view in the interface - per input or SPTS stream",
+        "desc_short": "Extension: Complience recording TV/Radio sIgnals with the ability to view in the interface - per input or SPTS stream",
+        "price": 560.0
+      },
+      {
+        "code": "SV-RECM",
+        "desc": "Extension: Complience recording MPTS  without the ability to view in the interface - per input MPTS stream",
+        "desc_short": "Extension: Complience recording MPTS  without the ability to view in the interface - per input MPTS stream",
+        "price": 2800.0
+      },
+      {
+        "code": "SV-WIN",
+        "desc": "Extension: Visualization channels with metadata on top of video - per channel window",
+        "desc_short": "Extension: Visualization channels with metadata on top of video - per channel window",
+        "price": 200.0
+      },
+      {
+        "code": "SV-SCRD",
+        "desc": "Extension: Subsystem for collection data from third party devices - per aggregation server",
+        "desc_short": "Extension: Subsystem for collection data from third party devices - per aggregation server",
+        "price": 2800.0
+      },
+      {
+        "code": "SV-SO",
+        "desc": "Extension: Collection metrics from each third party device - per metric from object",
+        "desc_short": "Extension: Collection metrics from each third party device - per metric from object",
+        "price": 10.0
+      },
+      {
+        "code": "SV-DOUT",
+        "desc": "Extension: Sending data to third-party systems  - per aggregation server",
+        "desc_short": "Extension: Sending data to third-party systems  - per aggregation server",
+        "price": 1400.0
+      },
+      {
+        "code": "SV-TLGR",
+        "desc": "Extension: Sending alarms to Telegram IM - per aggregation server",
+        "desc_short": "Extension: Sending alarms to Telegram IM - per aggregation server",
+        "price": 1800.0
+      },
+      {
+        "code": "SV-INTG",
+        "desc": "Extension: Integration metrics from 1 third party device (custom developing)",
+        "desc_short": "Extension: Integration metrics from 1 third party device (custom developing)",
+        "price": null
+      },
+      {
+        "code": "SV-INST",
+        "desc": "Extension: StratoView Implementation, training and commissioning of the system",
+        "desc_short": "Extension: StratoView Implementation, training and commissioning of the system",
+        "price": 0.15
+      }
+    ],
+    "logo": "product_logo_0.png"
+  },
+  {
+    "name": "StratoView LITE",
+    "sheet": "MULTIPROBE-STRATOVIEW",
+    "abbrev": "SVL",
+    "items": [
+      {
+        "code": "SV-LITE-8",
+        "desc": "Basic multiviewer for 8 channels (with 1 yaer SLA 15%)\nUp to 8 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 8 channels (with 1 yaer SLA 15%)",
+        "price": null
+      },
+      {
+        "code": "SV-LITE-16",
+        "desc": "Basic multiviewer for 16 channels (with 1 yaer SLA 15%)\nUp to 16 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 16 channels (with 1 yaer SLA 15%)",
+        "price": null
+      },
+      {
+        "code": "SV-LITE-32",
+        "desc": "Basic multiviewer for 32 channels (with 1 yaer SLA 15%)\nUp to 32 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 32 channels (with 1 yaer SLA 15%)",
+        "price": null
+      }
+    ],
+    "logo": "product_logo_1.png"
+  },
+  {
+    "name": "StratoView REC",
+    "sheet": "MULTIPROBE-STRATOVIEW",
+    "abbrev": "SV REC",
+    "items": [
+      {
+        "code": "SV-REC-8",
+        "desc": "Compliance recorder software for 8 channels (without SLA)\nUp to 8 channels, Not expandable, Visualization of channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 8 channels (without SLA)",
+        "price": 4500.0
+      },
+      {
+        "code": "SV-REC-16",
+        "desc": "Compliance recorder software for 16 channels (without SLA)\nUp to 16 channels, Not expandable, Visualization of channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 16 channels (without SLA)",
+        "price": 8400.0
+      },
+      {
+        "code": "SV-REC-32",
+        "desc": "Compliance recorder software for 32 channels (without SLA)\nUp to 32 channels, Not expandable, Visualization of channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 32 channels (without SLA)",
+        "price": 15300.0
+      }
+    ],
+    "logo": "product_logo_2.png"
+  },
+  {
+    "name": "AIRX",
+    "sheet": "VPLAY-AIRX-REC-MEDIA",
+    "abbrev": "AX",
+    "items": [
+      {
+        "code": "AX5-SD",
+        "desc": "SD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "SD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 3500.0
+      },
+      {
+        "code": "AX5-HD",
+        "desc": "HD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "HD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 5400.0
+      },
+      {
+        "code": "AX5-UHD",
+        "desc": "UHD/4K channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "UHD/4K channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 9100.0
+      },
+      {
+        "code": "AX5-CG",
+        "desc": "Graphics channel branding  - per channel",
+        "desc_short": "Graphics channel branding  - per channel",
+        "price": 950.0
+      },
+      {
+        "code": "AX5-UPGR",
+        "desc": "UPGRADE: from SD to HD, from HD to UHD, from V4.X to V5.X - per channel",
+        "desc_short": "UPGRADE: from SD to HD, from HD to UHD, from V4.X to V5.X - per channel",
+        "price": 2800.0
+      },
+      {
+        "code": "AX5-CLIENT",
+        "desc": "Client application: Remote user connection license - per user",
+        "desc_short": "Client application: Remote user connection license - per user",
+        "price": 650.0
+      },
+      {
+        "code": "AX5-AV",
+        "desc": "Output module: SL, Decklink, AJA, DekTec cards (12G-SDI/HDMI/Analog/NDI) - per output",
+        "desc_short": "Output module: SL, Decklink, AJA, DekTec cards (12G-SDI/HDMI/Analog/NDI) - per output",
+        "price": 520.0
+      },
+      {
+        "code": "AX5-2110",
+        "desc": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per stream",
+        "desc_short": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per stream",
+        "price": 2100.0
+      },
+      {
+        "code": "AX5-UDP",
+        "desc": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per stream",
+        "desc_short": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per stream",
+        "price": 970.0
+      },
+      {
+        "code": "AX5-WEB",
+        "desc": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per stream",
+        "desc_short": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per stream",
+        "price": 970.0
+      },
+      {
+        "code": "AX5-ADV-RX",
+        "desc": "Extension: Detection of DTMF, SCTE-35/104, GPI marks & events - per channel",
+        "desc_short": "Extension: Detection of DTMF, SCTE-35/104, GPI marks & events - per channel",
+        "price": 650.0
+      },
+      {
+        "code": "AX5-ADV-TX",
+        "desc": "Extension: SCTE-35/104 marks generation - per stream / output",
+        "desc_short": "Extension: SCTE-35/104 marks generation - per stream / output",
+        "price": 650.0
+      },
+      {
+        "code": "AX5-EAM",
+        "desc": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
+        "desc_short": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
+        "price": 420.0
+      },
+      {
+        "code": "AX5-SUB-DVB",
+        "desc": "Extension: Embedding subtitles into UDP TS (PID DVB) streams - per each sub.language in 1 channel",
+        "desc_short": "Extension: Embedding subtitles into UDP TS (PID DVB) streams - per each sub.language in 1 channel",
+        "price": 2340.0
+      },
+      {
+        "code": "AX5-SUB-BRN",
+        "desc": "Extension: The subtitles burning into channel image  - per channel",
+        "desc_short": "Extension: The subtitles burning into channel image  - per channel",
+        "price": 1820.0
+      },
+      {
+        "code": "AX5-RDN",
+        "desc": "Extension: 1+1 schedule redundancy  - per channel on backup server",
+        "desc_short": "Extension: 1+1 schedule redundancy  - per channel on backup server",
+        "price": 1300.0
+      },
+      {
+        "code": "AX5-R128",
+        "desc": "Extension: Automatic (Live) loudness control (ALC R128/ATSC85) - per channel",
+        "desc_short": "Extension: Automatic (Live) loudness control (ALC R128/ATSC85) - per channel",
+        "price": 1300.0
+      },
+      {
+        "code": "AX5-CG-PRO",
+        "desc": "Extension: CG PRO for Fill+Key inputs support - per channel",
+        "desc_short": "Extension: CG PRO for Fill+Key inputs support - per channel",
+        "price": 1050.0
+      },
+      {
+        "code": "AX5-EXT",
+        "desc": "Extension: Devices extrernal control via Ethernet (SWITCHERS, MATRICES, GPO, etc.) - per device",
+        "desc_short": "Extension: Devices extrernal control via Ethernet (SWITCHERS, MATRICES, GPO, etc.) - per device",
+        "price": 2400.0
+      },
+      {
+        "code": "AX5-MEDIA",
+        "desc": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
+        "desc_short": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
+        "price": 200.0
+      }
+    ],
+    "logo": "product_logo_3.png"
+  },
+  {
+    "name": "AIRX MEDIA",
+    "sheet": "VPLAY-AIRX-REC-MEDIA",
+    "abbrev": "AM",
+    "items": [
+      {
+        "code": "AM5-BASE",
+        "desc": "Application: AirX Media Automatic content management from external storages (DAS, NAS, AWS S3) - per server",
+        "desc_short": "Application: AirX Media Automatic content management from external storages (DAS, NAS, AWS S3) - per server",
+        "price": 1200.0
+      },
+      {
+        "code": "AM5-QLTY",
+        "desc": "AirX Media Extension: Content check & quality control for AirX Media server - per server",
+        "desc_short": "AirX Media Extension: Content check & quality control for AirX Media server - per server",
+        "price": 2000.0
+      },
+      {
+        "code": "AM5-TRC",
+        "desc": "VMEDIA Extension: Content trancode for VMEDIA server - per server",
+        "desc_short": "VMEDIA Extension: Content trancode for VMEDIA server - per server",
+        "price": 2500.0
+      }
+    ],
+    "logo": "product_logo_4.png"
+  },
+  {
+    "name": "AIRX Record",
+    "sheet": "VPLAY-AIRX-REC-MEDIA",
+    "abbrev": "AR",
+    "items": [
+      {
+        "code": "AR5-SD",
+        "desc": "SD recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "SD recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 1560.0
+      },
+      {
+        "code": "AR5-HD",
+        "desc": "HD recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "HD recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 2340.0
+      },
+      {
+        "code": "AR5-UHD",
+        "desc": "UHD/4K recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "UHD/4K recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 3100.0
+      },
+      {
+        "code": "AR5-UPGR",
+        "desc": "Upgrade from SD to HD or from HD to UHD - per each recording input",
+        "desc_short": "Upgrade from SD to HD or from HD to UHD - per each recording input",
+        "price": 1100.0
+      },
+      {
+        "code": "AR5-FILE",
+        "desc": "Additional parallel file recorder for same input",
+        "desc_short": "Additional parallel file recorder for same input",
+        "price": 700.0
+      },
+      {
+        "code": "AR5-2110",
+        "desc": "Extension: SDI over IP (SMPTE-2110) - per input or output interface",
+        "desc_short": "Extension: SDI over IP (SMPTE-2110) - per input or output interface",
+        "price": 2100.0
+      },
+      {
+        "code": "AR5-422C",
+        "desc": "Extension: 4:2:2 Color support per channel",
+        "desc_short": "Extension: 4:2:2 Color support per channel",
+        "price": 1300.0
+      },
+      {
+        "code": "AR5-ADV-RX",
+        "desc": "Extension: Detector for DTMF, SCTE-35/104, GPI per channel",
+        "desc_short": "Extension: Detector for DTMF, SCTE-35/104, GPI per channel",
+        "price": 650.0
+      },
+      {
+        "code": "AR5-RS422",
+        "desc": "Extension: Video Cassette Recorder by RS-422. Per channel.",
+        "desc_short": "Extension: Video Cassette Recorder by RS-422. Per channel.",
+        "price": 1300.0
+      }
+    ],
+    "logo": "product_logo_5.png"
+  },
+  {
+    "name": "MultiScreen 5.x",
+    "sheet": "MULTISCREEN-MULTIREC",
+    "abbrev": "MS",
+    "items": [
+      {
+        "code": "MS5-SD",
+        "desc": "SD Analyzer",
+        "desc_short": "SD Analyzer",
+        "price": 125.0
+      },
+      {
+        "code": "MS5-HD",
+        "desc": "SD/HD Analyzer",
+        "desc_short": "SD/HD Analyzer",
+        "price": 215.0
+      },
+      {
+        "code": "MS5-UHD",
+        "desc": "SD/HD/4K/UHD Analyzer",
+        "desc_short": "SD/HD/4K/UHD Analyzer",
+        "price": 340.0
+      },
+      {
+        "code": "MS5-AUD",
+        "desc": "Audio Analyzer (radio or additioanl audio groups/language for video)",
+        "desc_short": "Audio Analyzer (radio or additioanl audio groups/language for video)",
+        "price": 55.0
+      },
+      {
+        "code": "MS5-DB",
+        "desc": "Database access",
+        "desc_short": "Database access",
+        "price": 1100.0
+      },
+      {
+        "code": "MS5-T2MI",
+        "desc": "DVB-T2 MI Remultiplexer",
+        "desc_short": "DVB-T2 MI Remultiplexer",
+        "price": 500.0
+      },
+      {
+        "code": "MS5-SOIP",
+        "desc": "SDI over IP (2022-6, 2110) stream receiving, de-encapsulating and demultiplexing",
+        "desc_short": "SDI over IP (2022-6, 2110) stream receiving, de-encapsulating and demultiplexing",
+        "price": 1000.0
+      },
+      {
+        "code": "MS5-WND",
+        "desc": "Visualization setup: Video Window - per video box (channel) at output screen (mosaic)",
+        "desc_short": "Visualization setup: Video Window - per video box (channel) at output screen (mosaic)",
+        "price": 100.0
+      },
+      {
+        "code": "MS5-PPM",
+        "desc": "Visualization setup: Audio Peak Programme Meter - per additioanl audio group/language",
+        "desc_short": "Visualization setup: Audio Peak Programme Meter - per additioanl audio group/language",
+        "price": 50.0
+      },
+      {
+        "code": "MS5-STRM",
+        "desc": "Extension: Encoding Mosaic screen to IP UDP/HLS stream - per mosaic",
+        "desc_short": "Extension: Encoding Mosaic screen to IP UDP/HLS stream - per mosaic",
+        "price": 1100.0
+      },
+      {
+        "code": "MS5-ENC-SD",
+        "desc": "Extension: MultiScreen Source Encoder SD",
+        "desc_short": "Extension: MultiScreen Source Encoder SD",
+        "price": 250.0
+      },
+      {
+        "code": "MS5-ENC-HD",
+        "desc": "Extension: MultiScreen Source Encoder HD",
+        "desc_short": "Extension: MultiScreen Source Encoder HD",
+        "price": 350.0
+      },
+      {
+        "code": "MS5-TTX",
+        "desc": "Extension: MultiScreen TeleText, Subtitles and Captions Decoder - per channel",
+        "desc_short": "Extension: MultiScreen TeleText, Subtitles and Captions Decoder - per channel",
+        "price": 100.0
+      },
+      {
+        "code": "MS5-ADV",
+        "desc": "Extension: MultiScreen SCTE-104/35 Decoder & Logger - per channel",
+        "desc_short": "Extension: MultiScreen SCTE-104/35 Decoder & Logger - per channel",
+        "price": 200.0
+      },
+      {
+        "code": "MS5-R128",
+        "desc": "Extension: MultiScreen Audio Loudness Measurement (ITU-R, BS.1770.3, EBU R-128) - per audio",
+        "desc_short": "Extension: MultiScreen Audio Loudness Measurement (ITU-R, BS.1770.3, EBU R-128) - per audio",
+        "price": 110.0
+      },
+      {
+        "code": "MS5-SRV-ROT",
+        "desc": "Extension: MultiScreen Service Rotation - per one service rotator",
+        "desc_short": "Extension: MultiScreen Service Rotation - per one service rotator",
+        "price": 430.0
+      },
+      {
+        "code": "MS5-SNMP-RX",
+        "desc": "Extension: MultiScreen SNMP Collector - per server",
+        "desc_short": "Extension: MultiScreen SNMP Collector - per server",
+        "price": 800.0
+      },
+      {
+        "code": "MS5-SNMP-TX",
+        "desc": "Extension: MultiScreen SNMP Sender - per server",
+        "desc_short": "Extension: MultiScreen SNMP Sender - per server",
+        "price": 900.0
+      },
+      {
+        "code": "MS5-TLGM",
+        "desc": "Extension: MultiScreen service for sending alarms to Telegram IM - per server",
+        "desc_short": "Extension: MultiScreen service for sending alarms to Telegram IM - per server",
+        "price": 1100.0
+      },
+      {
+        "code": "MS5-KB-SW",
+        "desc": "Extension: Software remote keyboard - per keyboard",
+        "desc_short": "Extension: Software remote keyboard - per keyboard",
+        "price": 535.0
+      },
+      {
+        "code": "MS5-KB-ROT",
+        "desc": "Extension: Software remote keyboard with one rotation configuration - per keyboard",
+        "desc_short": "Extension: Software remote keyboard with one rotation configuration - per keyboard",
+        "price": 1100.0
+      },
+      {
+        "code": "MS5-KB-HW",
+        "desc": "Extension: Hardware remote keyboard - per keyboard",
+        "desc_short": "Extension: Hardware remote keyboard - per keyboard",
+        "price": 800.0
+      }
+    ],
+    "logo": "product_logo_6.png",
+    "description": "DVB / DTH / OTT / Mobile / IP analysing system for UNLIMITED number of TV and Radio channels"
+  },
+  {
+    "name": "MultiRec 3.x",
+    "sheet": "MULTISCREEN-MULTIREC",
+    "abbrev": "MS",
+    "items": [
+      {
+        "code": "MR3-WEB-UI",
+        "desc": "WEB user interface for users with seperate rights management - per server",
+        "desc_short": "WEB user interface for users with seperate rights management - per server",
+        "price": 1000.0
+      },
+      {
+        "code": "MR3-SPTS",
+        "desc": "Recorder per single-program transport streams (SPTS) - per stream",
+        "desc_short": "Recorder per single-program transport streams (SPTS) - per stream",
+        "price": 300.0
+      },
+      {
+        "code": "MR3-MPTS",
+        "desc": "Recorder per multi-program transport streams (MPTS) - per stream",
+        "desc_short": "Recorder per multi-program transport streams (MPTS) - per stream",
+        "price": 1200.0
+      },
+      {
+        "code": "MR3-SES",
+        "desc": "License for organizing a media session for playback in the Stream MultiRec player - per video window",
+        "desc_short": "License for organizing a media session for playback in the Stream MultiRec player - per video window",
+        "price": 50.0
+      },
+      {
+        "code": "MR3-TC",
+        "desc": "Extension: Transcoder (Custome codec, bitrate and resolution) - per channel",
+        "desc_short": "Extension: Transcoder (Custome codec, bitrate and resolution) - per channel",
+        "price": 300.0
+      },
+      {
+        "code": "MR3-ADV",
+        "desc": "Extension: Advertisement scanner for archive - per scanner",
+        "desc_short": "Extension: Advertisement scanner for archive - per scanner",
+        "price": 500.0
+      },
+      {
+        "code": "MR3-TSD",
+        "desc": "Extension: MultiRec Time-Shift retranslation (Time Shift Delay) - per shifted channel",
+        "desc_short": "Extension: MultiRec Time-Shift retranslation (Time Shift Delay) - per shifted channel",
+        "price": 400.0
+      },
+      {
+        "code": "MR3-SUB",
+        "desc": "Extension: DVB-Subtitles decoding and burning - per channel",
+        "desc_short": "Extension: DVB-Subtitles decoding and burning - per channel",
+        "price": 100.0
+      }
+    ],
+    "logo": "product_logo_7.png",
+    "description": "Solution for non-stop recording and advertisement detection (scanning).\n\nYou just set the desired number of the days to keep track of, and Stream MultiRec will record them uninterruptedly 24 hours a day with no human intervention. The number of tracked channels is defined by the user depending on specific requirements and the storage capacity of the video server in use."
+  },
+  {
+    "name": "MULTITUNER / AirX RMS",
+    "sheet": "HW-DEVICES",
+    "abbrev": "HW",
+    "items": [
+      {
+        "code": "MT-4CH-V2",
+        "desc": "4 channels version",
+        "desc_short": "4 channels version",
+        "price": 2200.0
+      },
+      {
+        "code": "MT-8CH-V2",
+        "desc": "8 channels version",
+        "desc_short": "8 channels version",
+        "price": 2800.0
+      },
+      {
+        "code": "MT-12CH-V2",
+        "desc": "12 channels version",
+        "desc_short": "12 channels version",
+        "price": 3200.0
+      },
+      {
+        "code": "MT-16CH-V2",
+        "desc": "16 channels version",
+        "desc_short": "16 channels version",
+        "price": 3800.0
+      }
+    ],
+    "logo": "product_logo_8.png"
+  },
+  {
+    "name": "TS Analyzer",
+    "sheet": "HW-DEVICES",
+    "abbrev": "HW",
+    "items": [
+      {
+        "code": "ALR-IP-2ASI-RF",
+        "desc": "Analyzer - IP MPEG TS, 2 ASI & RF version",
+        "desc_short": "Analyzer - IP MPEG TS, 2 ASI & RF version",
+        "price": 3000.0
+      },
+      {
+        "code": "ALR-IP-2ASI",
+        "desc": "Analyzer - IP MPEG TS, 2 ASI",
+        "desc_short": "Analyzer - IP MPEG TS, 2 ASI",
+        "price": 2700.0
+      }
+    ],
+    "logo": "product_logo_9.png"
+  },
+  {
+    "name": "Playback & Capture cards",
+    "sheet": "HW-DEVICES",
+    "abbrev": "HW",
+    "items": [
+      {
+        "code": "MH4GTX",
+        "desc": "MН4GTX (4 input 3G-SDI/ASI) card",
+        "desc_short": "MН4GTX (4 input 3G-SDI/ASI) card",
+        "price": 700.0
+      },
+      {
+        "code": "MH4LM",
+        "desc": "[discontinued] MH4LM (4 input HD/SD-SDI, ASI/CVBS) card",
+        "desc_short": "[discontinued] MH4LM (4 input HD/SD-SDI, ASI/CVBS) card",
+        "price": 700.0
+      },
+      {
+        "code": "MS4-SDI",
+        "desc": "MS4 (4 input SD-SDI, ASI) card",
+        "desc_short": "MS4 (4 input SD-SDI, ASI) card",
+        "price": 480.0
+      },
+      {
+        "code": "MS4-A",
+        "desc": "MS4-A or full version (4 input SD-SDI, ASI, CVBS) card",
+        "desc_short": "MS4-A or full version (4 input SD-SDI, ASI, CVBS) card",
+        "price": 500.0
+      },
+      {
+        "code": "MS4-S",
+        "desc": "MS4 Stripped (4 input of CVBS only) card",
+        "desc_short": "MS4 Stripped (4 input of CVBS only) card",
+        "price": 370.0
+      },
+      {
+        "code": "MS2-SDI",
+        "desc": "MS2 (2 input SD-SDI, ASI) card",
+        "desc_short": "MS2 (2 input SD-SDI, ASI) card",
+        "price": 320.0
+      },
+      {
+        "code": "MS2-A",
+        "desc": "MS2-A (2 input SD-SDI, ASI, CVBS) card",
+        "desc_short": "MS2-A (2 input SD-SDI, ASI, CVBS) card",
+        "price": 400.0
+      },
+      {
+        "code": "MS416",
+        "desc": "MS416 (16 inputs CVBS) AV signal input card",
+        "desc_short": "MS416 (16 inputs CVBS) AV signal input card",
+        "price": 450.0
+      },
+      {
+        "code": "BAL-XLR",
+        "desc": "Balanced Audio Card (XLR/BIG TRS) - Option for any Capture card",
+        "desc_short": "Balanced Audio Card (XLR/BIG TRS) - Option for any Capture card",
+        "price": 100.0
+      },
+      {
+        "code": "2R1T",
+        "desc": "2R1T - 2 HDMI inputs, 1 HDMI output, 4 CVBS inputs, 1 CVBS output",
+        "desc_short": "2R1T - 2 HDMI inputs, 1 HDMI output, 4 CVBS inputs, 1 CVBS output",
+        "price": 700.0
+      },
+      {
+        "code": "4R1T-XLR",
+        "desc": "4R1T with balanced audio (full card) - 4 CVBS inputs / 2 CVBS outputs",
+        "desc_short": "4R1T with balanced audio (full card) - 4 CVBS inputs / 2 CVBS outputs",
+        "price": 600.0
+      },
+      {
+        "code": "4R1T",
+        "desc": "4R1T Unbalanced - Composite capture/playback card Analog video/audio capture and playback",
+        "desc_short": "4R1T Unbalanced - Composite capture/playback card Analog video/audio capture and playback",
+        "price": 500.0
+      },
+      {
+        "code": "ALPHA-HD",
+        "desc": "[discontinued] Alpha SDI HD (Input + Output SD-SDI/HD-SDI) card",
+        "desc_short": "[discontinued] Alpha SDI HD (Input + Output SD-SDI/HD-SDI) card",
+        "price": null
+      },
+      {
+        "code": "ALPHA-PLUS",
+        "desc": "[discontinued] Alpha Plus PCI-E (Composite I/O, S-Video I/O, YUV, alpha signal output) card",
+        "desc_short": "[discontinued] Alpha Plus PCI-E (Composite I/O, S-Video I/O, YUV, alpha signal output) card",
+        "price": null
+      },
+      {
+        "code": "MSP2-ASI",
+        "desc": "MSP2 (Input + Output or Dual Output SD-SDI/ASI) card",
+        "desc_short": "MSP2 (Input + Output or Dual Output SD-SDI/ASI) card",
+        "price": 600.0
+      },
+      {
+        "code": "",
+        "desc": "Analog Tail cable - 20$; Single PCB with bracket - 25$; Double PCB with bracket - 35$; Single SET - 50$;",
+        "desc_short": "Analog Tail cable - 20$; Single PCB with bracket - 25$; Double PCB with bracket - 35$; Single SET - 50$;",
+        "price": null
+      }
+    ]
+  },
+  {
+    "name": "Other Devices",
+    "sheet": "HW-DEVICES",
+    "abbrev": "HW",
+    "items": [
+      {
+        "code": "SMD-T1-V4",
+        "desc": "Stream MultiDelay",
+        "desc_short": "Stream MultiDelay",
+        "price": 3000.0
+      },
+      {
+        "code": "WD-USB-1",
+        "desc": "WatchDog USB Timer",
+        "desc_short": "WatchDog USB Timer",
+        "price": 70.0
+      }
+    ]
+  },
+  {
+    "name": "MultiProbe PRO",
+    "sheet": "MULTIPROBE",
+    "abbrev": "MP",
+    "items": [
+      {
+        "code": "MP-AS",
+        "desc": "Base module for server data agregation to collect data and preform monitoring - per aggregation server",
+        "desc_short": "Base module for server data agregation to collect data and preform monitoring - per aggregation server",
+        "price": 8400.0
+      },
+      {
+        "code": "MP-SVQE",
+        "desc": "Extension: Standard QoE video analyzer (Black screen, Frozen video, Decodable Video) - per video",
+        "desc_short": "Extension: Standard QoE video analyzer (Black screen, Frozen video, Decodable Video) - per video",
+        "price": 150.0
+      },
+      {
+        "code": "MP-EVQE",
+        "desc": "Extension: Extended QoE video analyzer (Standard analyzer + Compression Blocking) - per video",
+        "desc_short": "Extension: Extended QoE video analyzer (Standard analyzer + Compression Blocking) - per video",
+        "price": 300.0
+      },
+      {
+        "code": "MP-KVQE",
+        "desc": "Extension: Keyframe QoE video analyzer (Standard analyzer via Keyframe decoding) - per video",
+        "desc_short": "Extension: Keyframe QoE video analyzer (Standard analyzer via Keyframe decoding) - per video",
+        "price": 75.0
+      },
+      {
+        "code": "MP-SAQE",
+        "desc": "Extension: Standard QoE audio analyzer (Silence, Overall, Decodable Audio) - per audio",
+        "desc_short": "Extension: Standard QoE audio analyzer (Silence, Overall, Decodable Audio) - per audio",
+        "price": 150.0
+      },
+      {
+        "code": "MP-EAQE",
+        "desc": "Extension: Extended QoE audio analyzer (Standard analyzer + EBU-R 128 Loudness Control) - per audio",
+        "desc_short": "Extension: Extended QoE audio analyzer (Standard analyzer + EBU-R 128 Loudness Control) - per audio",
+        "price": 300.0
+      },
+      {
+        "code": "MP-SQS",
+        "desc": "Extension: QoS analyzer (PSI/SI, TR101290, MDI, SDI, SDI over IP, etc) - per service",
+        "desc_short": "Extension: QoS analyzer (PSI/SI, TR101290, MDI, SDI, SDI over IP, etc) - per service",
+        "price": 75.0
+      },
+      {
+        "code": "MP-OTQS",
+        "desc": "Extension: OTT-metric analyzer (Master Playlist, Media playlist metrics) - per profile",
+        "desc_short": "Extension: OTT-metric analyzer (Master Playlist, Media playlist metrics) - per profile",
+        "price": 200.0
+      },
+      {
+        "code": "MP-DRM",
+        "desc": "Extension: working with DRM encrypted streams - per aggregation server",
+        "desc_short": "Extension: working with DRM encrypted streams - per aggregation server",
+        "price": 2000.0
+      },
+      {
+        "code": "MP-META",
+        "desc": "Extension: Metadata analyzer (SCTE-104/35, Teletext, Subtitles) - per stream",
+        "desc_short": "Extension: Metadata analyzer (SCTE-104/35, Teletext, Subtitles) - per stream",
+        "price": 280.0
+      },
+      {
+        "code": "MP-T2MI",
+        "desc": "Extension: DVB-T2 MI Remultiplexer - per plp",
+        "desc_short": "Extension: DVB-T2 MI Remultiplexer - per plp",
+        "price": 1300.0
+      },
+      {
+        "code": "MP-COR",
+        "desc": "Extension: Data correlation and SLA monitoring subsystem  - per 10 virtual correlation services",
+        "desc_short": "Extension: Data correlation and SLA monitoring subsystem  - per 10 virtual correlation services",
+        "price": 5600.0
+      },
+      {
+        "code": "MP-STAT",
+        "desc": "Extension: Reports subsystem - per aggregation server",
+        "desc_short": "Extension: Reports subsystem - per aggregation server",
+        "price": 2800.0
+      },
+      {
+        "code": "MP-COD",
+        "desc": "Extension: Source video and audio (mosaic) encoding - per input",
+        "desc_short": "Extension: Source video and audio (mosaic) encoding - per input",
+        "price": 560.0
+      },
+      {
+        "code": "MP-RECS",
+        "desc": "Extension: Complience recording TV/Radio sIgnals with the ability to view in the interface - per input or SPTS stream",
+        "desc_short": "Extension: Complience recording TV/Radio sIgnals with the ability to view in the interface - per input or SPTS stream",
+        "price": 560.0
+      },
+      {
+        "code": "MP-RECM",
+        "desc": "Extension: Complience recording MPTS  without the ability to view in the interface - per input MPTS stream",
+        "desc_short": "Extension: Complience recording MPTS  without the ability to view in the interface - per input MPTS stream",
+        "price": 2800.0
+      },
+      {
+        "code": "MP-WIN",
+        "desc": "Extension: Visualization channels with metadata on top of video - per channel window",
+        "desc_short": "Extension: Visualization channels with metadata on top of video - per channel window",
+        "price": 200.0
+      },
+      {
+        "code": "MP-SCRD",
+        "desc": "Extension: Subsystem for collection data from third party devices - per aggregation server",
+        "desc_short": "Extension: Subsystem for collection data from third party devices - per aggregation server",
+        "price": 2800.0
+      },
+      {
+        "code": "MP-SO",
+        "desc": "Extension: Collection metrics from each third party device - per metric from object",
+        "desc_short": "Extension: Collection metrics from each third party device - per metric from object",
+        "price": 10.0
+      },
+      {
+        "code": "MP-DOUT",
+        "desc": "Extension: Sending data to third-party systems  - per aggregation server",
+        "desc_short": "Extension: Sending data to third-party systems  - per aggregation server",
+        "price": 1400.0
+      },
+      {
+        "code": "MP-TLGR",
+        "desc": "Extension: Sending alarms to Telegram IM - per aggregation server",
+        "desc_short": "Extension: Sending alarms to Telegram IM - per aggregation server",
+        "price": 1800.0
+      },
+      {
+        "code": "MP-INTG",
+        "desc": "Extension: Integration metrics from 1 third party device (custom developing)",
+        "desc_short": "Extension: Integration metrics from 1 third party device (custom developing)",
+        "price": null
+      },
+      {
+        "code": "MP-INST",
+        "desc": "Extension: StratoView Implementation, training and commissioning of the system",
+        "desc_short": "Extension: StratoView Implementation, training and commissioning of the system",
+        "price": 0.15
+      }
+    ],
+    "description": "MultiProbe\nSystem is intended for simultaneous visual and instrumental monitoring for unlimited number of channels in real-time.\nAnalysing incoming signals for video problems: QoS & QoE. Detection Digital Program Insertion Cueing Message logging (SCTE-35 over MPEG2-TS). EPG (ETSI EN 300 468) decoding, automated report generations and sending, signal delivery path visaualisation, remote mosaic broadcasting.",
+    "section_label": "Distributed monitoring system licenses",
+    "logo": "product_logo_12.png"
+  },
+  {
+    "name": "MultiProbe LITE",
+    "sheet": "MULTIPROBE",
+    "abbrev": "MP LITE",
+    "items": [
+      {
+        "code": "MP-LITE-8",
+        "desc": "Basic multiviewer for 8 channels (with 1 year SLA 15%)\nUp to 8 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 8 channels (with 1 year SLA 15%)",
+        "price": null
+      },
+      {
+        "code": "MP-LITE-16",
+        "desc": "Basic multiviewer for 16 channels (with 1 year SLA 15%)\nUp to 16 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 16 channels (with 1 year SLA 15%)",
+        "price": null
+      },
+      {
+        "code": "MP-LITE-32",
+        "desc": "Basic multiviewer for 32 channels (with 1 year SLA 15%)\nUp to 32 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
+        "desc_short": "Basic multiviewer for 32 channels (with 1 year SLA 15%)",
+        "price": null
+      }
+    ],
+    "logo": "product_logo_13.png"
+  },
+  {
+    "name": "MultiProbe REC",
+    "sheet": "MULTIPROBE",
+    "abbrev": "MP REC",
+    "items": [
+      {
+        "code": "MP-REC-8",
+        "desc": "Compliance recorder software for 8 channels (without SLA)\nUp to 8 channels, Not expandable, Visualization channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 8 channels (without SLA)",
+        "price": 4500.0
+      },
+      {
+        "code": "MP-REC-16",
+        "desc": "Compliance recorder software for 16 channels (without SLA)\nUp to 16 channels, Not expandable, Visualization channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 16 channels (without SLA)",
+        "price": 8400.0
+      },
+      {
+        "code": "MP-REC-32",
+        "desc": "Compliance recorder software for 32 channels (without SLA)\nUp to 32 channels, Not expandable, Visualization channels with metadata on top of video, Metadata analyzer (Subtitles), Source AV/mosaic encoding, Recording a single SPTS TV or radio broadcasting signal.",
+        "desc_short": "Compliance recorder software for 32 channels (without SLA)",
+        "price": 15300.0
+      }
+    ],
+    "logo": "product_logo_14.png"
+  },
+  {
+    "name": "VPLAY",
+    "sheet": "VPLAY",
+    "abbrev": "VP",
+    "items": [
+      {
+        "code": "VP5-SD",
+        "desc": "SD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "SD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 3500.0
+      },
+      {
+        "code": "VP5-HD",
+        "desc": "HD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "HD channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 5400.0
+      },
+      {
+        "code": "VP5-UHD",
+        "desc": "UHD/4K channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "desc_short": "UHD/4K channel license (HDMI, DVI, VGA, DP outputs) - per channel",
+        "price": 9100.0
+      },
+      {
+        "code": "VP5-CG",
+        "desc": "Graphics channel branding  - per channel",
+        "desc_short": "Graphics channel branding  - per channel",
+        "price": 950.0
+      },
+      {
+        "code": "VP5-UPGR",
+        "desc": "UPGRADE: from SD to HD, from HD to UHD, from V4.X to V5.X - per channel",
+        "desc_short": "UPGRADE: from SD to HD, from HD to UHD, from V4.X to V5.X - per channel",
+        "price": 2800.0
+      },
+      {
+        "code": "VP5-CLIENT",
+        "desc": "Client application: Remote user connection license - per user",
+        "desc_short": "Client application: Remote user connection license - per user",
+        "price": 650.0
+      },
+      {
+        "code": "VP5-AV",
+        "desc": "Output module: SL, Decklink, AJA, DekTec cVRds (12G-SDI/HDMI/Analog/NDI) - per output",
+        "desc_short": "Output module: SL, Decklink, AJA, DekTec cVRds (12G-SDI/HDMI/Analog/NDI) - per output",
+        "price": 520.0
+      },
+      {
+        "code": "VP5-2110",
+        "desc": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per streVM",
+        "desc_short": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per streVM",
+        "price": 2100.0
+      },
+      {
+        "code": "VP5-UDP",
+        "desc": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per streVM",
+        "desc_short": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per streVM",
+        "price": 970.0
+      },
+      {
+        "code": "VP5-WEB",
+        "desc": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per streVM",
+        "desc_short": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per streVM",
+        "price": 970.0
+      },
+      {
+        "code": "VP5-ADV-RX",
+        "desc": "Extension: Detection of DTMF, SCTE-35/104, GPI mVRks & events - per channel",
+        "desc_short": "Extension: Detection of DTMF, SCTE-35/104, GPI mVRks & events - per channel",
+        "price": 650.0
+      },
+      {
+        "code": "VP5-ADV-TX",
+        "desc": "Extension: SCTE-35/104 mVRks generation - per streVM / output",
+        "desc_short": "Extension: SCTE-35/104 mVRks generation - per streVM / output",
+        "price": 650.0
+      },
+      {
+        "code": "VP5-EVM",
+        "desc": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
+        "desc_short": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
+        "price": 420.0
+      },
+      {
+        "code": "VP5-SUB-DVB",
+        "desc": "Extension: Embedding subtitles into UDP TS (PID DVB) streVMs - per each sub.language in 1 channel",
+        "desc_short": "Extension: Embedding subtitles into UDP TS (PID DVB) streVMs - per each sub.language in 1 channel",
+        "price": 2340.0
+      },
+      {
+        "code": "VP5-SUB-BRN",
+        "desc": "Extension: The subtitles burning into channel image  - per channel",
+        "desc_short": "Extension: The subtitles burning into channel image  - per channel",
+        "price": 1820.0
+      },
+      {
+        "code": "VP5-RDN",
+        "desc": "Extension: 1+1 schedule redundancy  - per channel on backup server",
+        "desc_short": "Extension: 1+1 schedule redundancy  - per channel on backup server",
+        "price": 1300.0
+      },
+      {
+        "code": "VP5-R128",
+        "desc": "Extension: Automatic (Live) loudness control (ALC R128/ATSC85) - per channel",
+        "desc_short": "Extension: Automatic (Live) loudness control (ALC R128/ATSC85) - per channel",
+        "price": 1300.0
+      },
+      {
+        "code": "VP5-CG-PRO",
+        "desc": "Extension: CG PRO for Fill+Key inputs support - per channel",
+        "desc_short": "Extension: CG PRO for Fill+Key inputs support - per channel",
+        "price": 1050.0
+      },
+      {
+        "code": "VP5-EXT",
+        "desc": "Extension: Devices extrernal control via Ethernet (SWITCHERS, MATRICES, GPO, etc.) - per device",
+        "desc_short": "Extension: Devices extrernal control via Ethernet (SWITCHERS, MATRICES, GPO, etc.) - per device",
+        "price": 2400.0
+      },
+      {
+        "code": "VP5-MEDIA",
+        "desc": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
+        "desc_short": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
+        "price": 200.0
+      },
+      {
+        "code": "VP5-CLD-STD",
+        "desc": "StandVRd subscription - per SD channel\nIncludes: SD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "StandVRd subscription - per SD channel",
+        "price": 280.0
+      },
+      {
+        "code": "VP5-CLD-FULL",
+        "desc": "Full subscription - per HD channel\nIncludes: HD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Full subscription - per HD channel",
+        "price": 420.0
+      },
+      {
+        "code": "VP5-CLD-ULTRA",
+        "desc": "Ultra subscription - per UHD/4K channel\nIncludes: UHD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Ultra subscription - per UHD/4K channel",
+        "price": 560.0
+      },
+      {
+        "code": "AX5-CLD-STD",
+        "desc": "Standard subscription - per SD channel\nIncludes: SD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Standard subscription - per SD channel",
+        "price": 280.0
+      },
+      {
+        "code": "AX5-CLD-FULL",
+        "desc": "Full subscription - per HD channel\nIncludes: HD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Full subscription - per HD channel",
+        "price": 420.0
+      },
+      {
+        "code": "AX5-CLD-ULTRA",
+        "desc": "Ultra subscription - per UHD/4K channel\nIncludes: UHD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Ultra subscription - per UHD/4K channel",
+        "price": 560.0
+      }
+    ],
+    "section_label": "Playout broadcast automation system licenses",
+    "description": "Multi-functional user friendly multi–channel broadcast playout server for multiple tiers of broadcast operators and full broadcast center operations.\n\nVplay 5 is ideally suited to Broadcasters who are aiming to migrate to IP and web streaming services. The server can mix different inputs and outputs on a per channel basis and supports multi format ingest from live sources.",
+    "logo": "product_logo_15.png"
+  },
+  {
+    "name": "VMEDIA",
+    "sheet": "VPLAY",
+    "abbrev": "VM",
+    "items": [
+      {
+        "code": "VM5-BASE",
+        "desc": "Application: AirX Media Automatic content management from external storages (DAS, NAS, AWS S3) - per server",
+        "desc_short": "Application: AirX Media Automatic content management from external storages (DAS, NAS, AWS S3) - per server",
+        "price": 1200.0
+      },
+      {
+        "code": "VM5-QLTY",
+        "desc": "AirX Media Extension: Content check & quality control for AirX Media server - per server",
+        "desc_short": "AirX Media Extension: Content check & quality control for AirX Media server - per server",
+        "price": 2000.0
+      },
+      {
+        "code": "VM5-TRC",
+        "desc": "VMEDIA Extension: Content trancode for VMEDIA server - per server",
+        "desc_short": "VMEDIA Extension: Content trancode for VMEDIA server - per server",
+        "price": 2500.0
+      }
+    ],
+    "section_label": "smart content manager licenses",
+    "description": "VMedia 5 is a smart content manager for automatically copying content from external sources. It allows the broadcasting channel to request and automatically receive content from the copy service, and also has the ability to quickly play media files from external systems in case of emergency or unexpected situations.",
+    "logo": "product_logo_16.png"
+  },
+  {
+    "name": "VREC",
+    "sheet": "VPLAY",
+    "abbrev": "VR",
+    "items": [
+      {
+        "code": "VR5-SD",
+        "desc": "SD recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "SD recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 1560.0
+      },
+      {
+        "code": "VR5-HD",
+        "desc": "HD recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "HD recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 2340.0
+      },
+      {
+        "code": "VR5-UHD",
+        "desc": "UHD/4K recorder (single file, up to 4:2:0) - per each recording input",
+        "desc_short": "UHD/4K recorder (single file, up to 4:2:0) - per each recording input",
+        "price": 3100.0
+      },
+      {
+        "code": "VR5-UPGR",
+        "desc": "Upgrade from SD to HD or from HD to UHD - per each recording input",
+        "desc_short": "Upgrade from SD to HD or from HD to UHD - per each recording input",
+        "price": 1100.0
+      },
+      {
+        "code": "VR5-FILE",
+        "desc": "Additional pVRallel file recorder for sVMe input",
+        "desc_short": "Additional pVRallel file recorder for sVMe input",
+        "price": 700.0
+      },
+      {
+        "code": "VR5-2110",
+        "desc": "Extension: SDI over IP (SMPTE-2110) - per input or output interface",
+        "desc_short": "Extension: SDI over IP (SMPTE-2110) - per input or output interface",
+        "price": 2100.0
+      },
+      {
+        "code": "VR5-422C",
+        "desc": "Extension: 4:2:2 Color support per channel",
+        "desc_short": "Extension: 4:2:2 Color support per channel",
+        "price": 1300.0
+      },
+      {
+        "code": "VR5-ADV-RX",
+        "desc": "Extension: Detector for DTMF, SCTE-35/104, GPI per channel",
+        "desc_short": "Extension: Detector for DTMF, SCTE-35/104, GPI per channel",
+        "price": 650.0
+      },
+      {
+        "code": "VR5-RS422",
+        "desc": "Extension: Video Cassette Recorder by RS-422. Per channel.",
+        "desc_short": "Extension: Video Cassette Recorder by RS-422. Per channel.",
+        "price": 1300.0
+      }
+    ],
+    "section_label": "Multi-channel recording licenses",
+    "description": "Multi-channel recording from various sources according to schedule or in manual mode.\n\nSupport of circuit boards from various manufacturers what provides recording of analog and digital signals: UHD/HD/SD-SDI, CVBS + Analog/SDI Embedded Audio, MPTS/SPTS over ASI/IP, NewTek NDI, ST 2110. Mode and parameters are being set independently for each channel. Various profiles for recording are provided.",
+    "logo": "product_logo_17.png"
+  }
+]

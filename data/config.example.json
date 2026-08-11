@@ -1,0 +1,18 @@
+{
+  "pipedrive": {
+    "api_token": "",
+    "api_url": "https://api.pipedrive.com/v1"
+  },
+  "jira": {
+    "base_url": "https://jira.streamlabs.ru",
+    "email": "",
+    "api_token": "",
+    "project_key": "COD",
+    "component": "Presale",
+    "assignee_account_id": "",
+    "issue_type": "Task",
+    "users": [],
+    "assignees": []
+  },
+  "users": []
+}

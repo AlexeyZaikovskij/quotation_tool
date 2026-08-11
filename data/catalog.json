@@ -1,0 +1,671 @@
+{
+  "categories": [
+    {
+      "id": "cpu",
+      "name": "CPU",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "AMD EPYC 7203 SP3, 8C-16T, 2.8GHz, 120W",
+          "socket": "SP3",
+          "mem_channels": 8,
+          "mem_type": "RDDR4",
+          "tdp": 120
+        },
+        {
+          "name": "AMD EPYC 7303 SP3, 16C-32T, 2.4GHz, 130W",
+          "socket": "SP3",
+          "mem_channels": 8,
+          "mem_type": "RDDR4",
+          "tdp": 130
+        },
+        {
+          "name": "AMD EPYC 7313 SP3, 16C-32T, 3.0GHz, 155W",
+          "mem_channels": 8,
+          "mem_type": "RDDR4",
+          "socket": "SP3",
+          "tdp": 155
+        },
+        {
+          "name": "AMD EPYC 7543 SP3, 32C-64T, 2.8GHz, 225W",
+          "mem_channels": 8,
+          "mem_type": "RDDR4",
+          "socket": "SP3",
+          "tdp": 225
+        },
+        {
+          "name": "AMD EPYC 7763 SP3, 64C-128T, 2.45GHz, 280W",
+          "mem_channels": 8,
+          "mem_type": "RDDR4",
+          "socket": "SP3",
+          "tdp": 280
+        },
+        {
+          "name": "AMD EPYC™ 9335 SP5, 32C-64T, 3 GHz, 210W",
+          "socket": "SP5",
+          "mem_channels": 12,
+          "mem_type": "RDDR5",
+          "tdp": 210
+        },
+        {
+          "name": "AMD EPYC™ 9455 SP5, 48C-96T, 3.15 GHz, 300W",
+          "socket": "SP5",
+          "mem_channels": 12,
+          "mem_type": "RDDR5",
+          "tdp": 300
+        },
+        {
+          "name": "AMD EPYC™ 9535 SP5, 64C-128T, 2.5 GHz, 300W",
+          "socket": "SP5",
+          "mem_channels": 12,
+          "mem_type": "RDDR5",
+          "tdp": 300
+        }
+      ],
+      "item_schema": [
+        "socket",
+        "mem_channels",
+        "mem_type",
+        "tdp"
+      ]
+    },
+    {
+      "id": "motherboard",
+      "name": "Motherboard",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "GIGABYTE MZ32-AR0 (2x1GbE)",
+          "socket": "SP3",
+          "ram_slots": 16,
+          "pcie_x16": 6,
+          "pcie_x8": 1,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "Supermicro H12SSL-I (2x1GbE)",
+          "socket": "SP3",
+          "ram_slots": 8,
+          "pcie_x16": 5,
+          "pcie_x8": 2,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "Supermicro H12SSL-NT (2x10GbE)",
+          "socket": "SP3",
+          "ram_slots": 8,
+          "pcie_x16": 5,
+          "pcie_x8": 2,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "AsRock ROMED8-2T/BCM (2x10GbE)",
+          "socket": "SP3",
+          "ram_slots": 8,
+          "pcie_x16": 5,
+          "pcie_x8": 0,
+          "pcie_x4": 2,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "MiTac S8030GM2NE (2x10Gb+2x1Gb)",
+          "socket": "SP3",
+          "ram_slots": 8,
+          "pcie_x16": 5,
+          "pcie_x8": 2,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "DUAL CPU ROME2D16-2L+",
+          "socket": "SP3",
+          "ram_slots": 16,
+          "pcie_x16": 5,
+          "pcie_x8": 1,
+          "pcie_x4": 0,
+          "cpu_sockets": 2
+        },
+        {
+          "name": "Supermicro H14SSL-N (2x1Gbe)",
+          "socket": "SP5",
+          "ram_slots": 12,
+          "pcie_x16": 3,
+          "pcie_x8": 2,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "Asus K14PA-U12 (2 x SFP28 25Gb/s)",
+          "socket": "SP5",
+          "ram_slots": 12,
+          "pcie_x16": 3,
+          "pcie_x8": 0,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        },
+        {
+          "name": "Gigabyte MZ23-SU0 (2x1Gbe)",
+          "socket": "SP5",
+          "ram_slots": 12,
+          "pcie_x16": 5,
+          "pcie_x8": 0,
+          "pcie_x4": 0,
+          "cpu_sockets": 1
+        }
+      ],
+      "item_schema": [
+        "socket",
+        "cpu_sockets",
+        "ram_slots",
+        "pcie_x16",
+        "pcie_x8",
+        "pcie_x4"
+      ]
+    },
+    {
+      "id": "cpu_cooler",
+      "name": "CPU Cooler",
+      "has_qty": false,
+      "items": [
+        "Supermicro 2U Active Heat Sink AMD SP3",
+        "Supermicro 2U Active Heat Sink AMD SP5"
+      ]
+    },
+    {
+      "id": "ram",
+      "name": "RAM",
+      "has_qty": true,
+      "items": [
+        {
+          "name": "RDDR4 8Gb",
+          "mem_type": "RDDR4",
+          "capacity": 8,
+          "tdp": 3
+        },
+        {
+          "name": "RDDR4 16Gb",
+          "mem_type": "RDDR4",
+          "capacity": 16,
+          "tdp": 3
+        },
+        {
+          "name": "RDDR4 32Gb",
+          "mem_type": "RDDR4",
+          "capacity": 32,
+          "tdp": 3
+        },
+        {
+          "name": "RDDR5 16Gb",
+          "mem_type": "RDDR5",
+          "capacity": 16,
+          "tdp": 4
+        },
+        {
+          "name": "RDDR5 32Gb",
+          "mem_type": "RDDR5",
+          "capacity": 32,
+          "tdp": 4
+        },
+        {
+          "name": "RDDR5 64Gb",
+          "mem_type": "RDDR5",
+          "capacity": 64,
+          "tdp": 4
+        }
+      ],
+      "item_schema": [
+        "mem_type",
+        "capacity"
+      ]
+    },
+    {
+      "id": "gpu",
+      "name": "GPU",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "Nvidia RTX 3050 Ti Low Profile",
+          "tdp": 130,
+          "pcie_slot": "x16",
+          "slots_used": 1
+        },
+        {
+          "name": "NVIDIA Quadro T1000 4Gb",
+          "tdp": 50,
+          "pcie_slot": "x16",
+          "slots_used": 1
+        },
+        {
+          "name": "Nvidia Quadro RTX A2000 12 Gb",
+          "tdp": 70,
+          "pcie_slot": "x16",
+          "slots_used": 2
+        },
+        {
+          "name": "Nvidia Quadro RTX A4000",
+          "tdp": 140,
+          "pcie_slot": "x16",
+          "slots_used": 2
+        },
+        {
+          "name": "NVIDIA RTX PRO 4000 Blackwell",
+          "tdp": 145,
+          "pcie_slot": "x16",
+          "slots_used": 1
+        },
+        {
+          "name": "Nvidia RTX 4060 Ti Low Profile",
+          "tdp": 165,
+          "pcie_slot": "x16"
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "pcie_slot",
+        "slots_used"
+      ]
+    },
+    {
+      "id": "os_ssd",
+      "name": "OS SSD",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "SSD 480Gb Samsung PM893 SATA 2.5\"",
+          "disk_type": "SSD"
+        },
+        {
+          "name": "HDD 1TB 3.5\" SATA 7.2K",
+          "disk_type": "SSD"
+        },
+        {
+          "name": "SSD Intel S4520 480GB SATA3",
+          "disk_type": "SSD"
+        },
+        {
+          "name": "Samsung PM9A3 960GB NVMe M.2",
+          "disk_type": "SSD"
+        },
+        {
+          "name": "1.92TB Enterprise SSD SATA",
+          "disk_type": "SSD"
+        }
+      ],
+      "item_schema": [
+        "disk_type"
+      ]
+    },
+    {
+      "id": "case",
+      "name": "Case",
+      "has_qty": false,
+      "item_schema": [
+        "expansion_slots",
+        "hdd_slots"
+      ],
+      "items": [
+        {
+          "name": "3U Stream Labs case, 16x HDD hot-swap, Rail kit",
+          "expansion_slots": 7,
+          "hdd_slots": 16
+        }
+      ]
+    },
+    {
+      "id": "psu",
+      "name": "PSU",
+      "has_qty": false,
+      "item_schema": [
+        "tdp"
+      ],
+      "items": [
+        {
+          "name": "PSU 800Wx2 (Redundant)",
+          "tdp": 800
+        },
+        {
+          "name": "PSU 1200Wx2 (Redundant)",
+          "tdp": 1200
+        },
+        {
+          "name": "PSU 800W (Single)",
+          "tdp": 800
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "name": "Network",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "Intel i350-T2 (2x1GbE)",
+          "tdp": 5,
+          "pcie_slot": "x4"
+        },
+        {
+          "name": "Intel i350-T4 (4x1GbE)",
+          "tdp": 5,
+          "pcie_slot": "x4"
+        },
+        {
+          "name": "Intel X710-DA2 SFP+ (2x10GbE)",
+          "tdp": 7,
+          "pcie_slot": "x8"
+        },
+        {
+          "name": "TP-LINK TG-3468 (1GbE)",
+          "tdp": 4,
+          "pcie_slot": "x4"
+        },
+        {
+          "name": "Mellanox MCX653106A + Rivermax Lic + SLA 5Y",
+          "tdp": 21,
+          "pcie_slot": "x16"
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "slots_used"
+      ]
+    },
+    {
+      "id": "raid_controller",
+      "name": "RAID Controller",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "LSI 9361-8i",
+          "tdp": 16,
+          "pcie_slot": "x16"
+        },
+        {
+          "name": "LSI 9361-16i",
+          "tdp": 29,
+          "pcie_slot": "x16"
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "slots_used"
+      ]
+    },
+    {
+      "id": "raid_disks",
+      "name": "RAID Disks",
+      "has_qty": true,
+      "items": [
+        {
+          "name": "HDD 2TB Seagate 3.5\" SATA 7.2K",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "HDD WD Gold 4TB SATA",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "HDD WD Gold 8TB SATA",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "HDD WD Gold 10TB SATA",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "HDD WD Gold 16TB SATA",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "HDD WD Gold 20TB SATA",
+          "tdp": 6,
+          "disk_type": "HDD"
+        },
+        {
+          "name": "SSD Intel S4520 480GB SATA3",
+          "tdp": 2,
+          "disk_type": "SSD"
+        },
+        {
+          "name": "Samsung PM9A3 960GB NVMe M.2",
+          "tdp": 4,
+          "disk_type": "NVMe"
+        },
+        {
+          "name": "1.92TB Enterprise SSD SATA",
+          "tdp": 2,
+          "disk_type": "SSD"
+        },
+        {
+          "name": "HDD WD Gold 1 Tb SATA",
+          "tdp": 7,
+          "pcie_slot": "x16"
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "disk_type"
+      ]
+    },
+    {
+      "id": "os",
+      "name": "OS",
+      "has_qty": false,
+      "items": [
+        "Windows 11 PRO",
+        "Windows Server 2022 (16 Cores)",
+        "Windows Server 2022 + 4 Core add-on",
+        "Ubuntu Server LTS"
+      ]
+    },
+    {
+      "id": "pci_card_1",
+      "name": "PCI Card 1",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "Stream Labs MH3G Lite (MS4/MH4LM)",
+          "tdp": 15,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DekTec DTA-2178",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DekTec DTA-2139C",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Quad 2",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Duo 2",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink 8K Pro",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Quad HDMI Recorder",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "TBS6205 DVB-T2/T/C Quad PCIe",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "AJA Corvid",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "Lynx AES16e",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DIN 1.0/2.3 to BNC Adapter",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "pcie_slot",
+        "slots_used"
+      ]
+    },
+    {
+      "id": "pci_card_2",
+      "name": "PCI Card 2",
+      "has_qty": false,
+      "items": [
+        {
+          "name": "Stream Labs MH3G Lite (MS4/MH4LM)",
+          "tdp": 15,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DekTec DTA-2178",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DekTec DTA-2139C",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Quad 2",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Duo 2",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink 8K Pro",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DeckLink Quad HDMI Recorder",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "TBS6205 DVB-T2/T/C Quad PCIe",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "AJA Corvid",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "Lynx AES16e",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        },
+        {
+          "name": "DIN 1.0/2.3 to BNC Adapter",
+          "tdp": 10,
+          "pcie_slot": "x8",
+          "slots_used": 1
+        }
+      ],
+      "item_schema": [
+        "tdp",
+        "pcie_slot",
+        "slots_used"
+      ]
+    },
+    {
+      "id": "seldom_used",
+      "name": "Seldom Used",
+      "has_qty": false,
+      "items": [
+        "Intel VROC license",
+        "Mini DP Male to DP Female",
+        "Mini DP Male to HDMI Female",
+        "Micro Converter HDMI to SDI 3G wPSU",
+        "Supermicro Mini-SAS HD 80cm 12Gb/s"
+      ]
+    }
+  ],
+  "sections": {
+    "Platform": [
+      "cpu",
+      "motherboard",
+      "cpu_cooler",
+      "psu",
+      "case"
+    ],
+    "Memory & Storage": [
+      "ram",
+      "os_ssd",
+      "raid_controller",
+      "raid_disks"
+    ],
+    "Network & GPU": [
+      "network",
+      "gpu"
+    ],
+    "OS": [
+      "os"
+    ],
+    "PCI & Misc": [
+      "pci_card_1",
+      "pci_card_2",
+      "seldom_used"
+    ]
+  },
+  "section_order": [
+    "Platform",
+    "Memory & Storage",
+    "Network & GPU",
+    "OS",
+    "PCI & Misc"
+  ]
+}

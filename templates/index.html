@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stream Labs — Server Configurator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.6.0/dist/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0f1117;
+    --bg2:      #1a1d2e;
+    --bg3:      #222540;
+    --border:   #2e3250;
+    --border2:  #3d4270;
+    --text:     #e2e8f0;
+    --muted:    #7c85b3;
+    --accent:   #3b82f6;
+    --accent2:  #1d4ed8;
+    --success:  #22c55e;
+    --danger:   #ef4444;
+    --warning:  #f59e0b;
+    --radius:   8px;
+    --radius-lg:12px;
+    --mono:     'Consolas', 'Courier New', monospace;
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; min-height: 100vh; }
+
+  /* Layout */
+  .shell { max-width: 1600px; margin: 0 auto; padding: 20px 24px 60px; }
+  .app-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .app-logo { width: 36px; height: 36px; background: var(--accent); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; flex-shrink: 0; }
+  .app-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .app-sub { font-size: 12px; color: var(--muted); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; display: flex; align-items: center; gap: 6px; transition: color .15s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab i { font-size: 15px; }
+  .pane { display: none; }
+  .pane.active { display: block; }
+
+  /* Buttons */
+  .btn { height: 32px; padding: 0 14px; font-size: 12px; font-weight: 500; border-radius: var(--radius); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border2); background: none; color: var(--text); transition: background .12s; white-space: nowrap; }
+  .btn:hover { background: var(--bg3); }
+  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.primary:hover { background: var(--accent2); }
+  .btn.ghost { border-color: transparent; padding: 0 7px; }
+  .btn.ghost:hover { background: var(--bg3); }
+  .btn.danger { color: var(--danger); border-color: transparent; padding: 0 7px; }
+  .btn.danger:hover { background: rgba(239,68,68,.12); }
+
+  /* Form controls */
+  input[type=text], input[type=number], select, textarea {
+    background: var(--bg2); border: 1px solid var(--border); color: var(--text);
+    border-radius: var(--radius); font-size: 13px; outline: none; width: 100%;
+    padding: 5px 9px; height: 32px; transition: border-color .15s;
+  }
+  input[type=text]:focus, input[type=number]:focus, select:focus { border-color: var(--accent); }
+  select option { background: var(--bg2); }
+
+  /* ── CONFIGURATOR ── */
+  .cfg-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+  .cfg-toolbar-title { font-size: 14px; font-weight: 600; }
+  .cfg-toolbar-sub { font-size: 11px; color: var(--muted); }
+  .servers-list { display: flex; flex-direction: column; gap: 12px; }
+  .empty-state { text-align: center; padding: 3rem 0; color: var(--muted); }
+  .empty-state i { font-size: 36px; display: block; margin-bottom: 10px; opacity: .3; }
+
+  .server-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .srv-hdr { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg3); border-bottom: 1px solid var(--border); }
+  .srv-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .srv-name { font-size: 13px; font-weight: 600; background: none; border: none; border-bottom: 1px solid transparent; color: var(--text); flex: 1; min-width: 0; outline: none; padding: 2px 0; }
+  .srv-name:focus { border-bottom-color: var(--accent); }
+  .qty-wrap { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .qty-lbl { font-size: 11px; color: var(--muted); }
+  .qbtn { width: 24px; height: 24px; border-radius: 5px; border: 1px solid var(--border2); background: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+  .qbtn:hover { background: var(--bg); }
+  .qty-v { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
+
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .sec-hdr { grid-column: 1 / -1; padding: 5px 14px; background: var(--bg3); border-top: 1px solid var(--border); font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .comp-cell { padding: 7px 14px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .comp-cell.full { grid-column: 1 / -1; border-right: none; }
+  .comp-cell:nth-child(even):not(.full) { border-right: none; }
+  .comp-lbl { font-size: 11px; color: var(--muted); min-width: 92px; flex-shrink: 0; }
+  .comp-sel { flex: 1; min-width: 0; height: 28px; font-size: 12px; }
+  .cqbtn { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border2); background: none; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; color: var(--text); flex-shrink: 0; }
+  .cqbtn:hover { background: var(--bg3); }
+  .cqv { font-size: 12px; font-weight: 600; min-width: 16px; text-align: center; }
+
+  /* Output */
+  .out-area { margin-top: 16px; }
+  .out-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .out-title { font-size: 13px; font-weight: 600; }
+  .out-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 12px; line-height: 1.5; overflow-x: auto; color: var(--text); }
+  .out-box table { color: #172b4d; background: #ffffff; border-radius: 4px; overflow: hidden; }
+  .out-box th, .out-box td { color: #172b4d; background: #ffffff; }
+  .out-box th { background: #f4f5f7; }
+  .toast { font-size: 11px; color: var(--success); display: none; margin-left: 8px; }
+
+  /* ── CATALOG ── */
+  .cat-layout { display: grid; grid-template-columns: 210px 1fr; gap: 14px; min-height: 420px; }
+  .cat-sidebar { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .cat-sidebar-hdr { padding: 9px 12px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center; justify-content: space-between; }
+  .cat-items { flex: 1; overflow-y: auto; }
+  .cat-item { padding: 9px 12px; font-size: 12px; cursor: pointer; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; transition: background .1s; }
+  .cat-item:hover { background: var(--bg3); color: var(--text); }
+  .cat-item.active { background: rgba(59,130,246,.15); color: var(--accent); font-weight: 600; }
+  .cat-item .cnt { font-size: 10px; background: var(--bg3); border-radius: 100px; padding: 1px 6px; color: var(--muted); }
+  .cat-item.active .cnt { color: var(--accent); }
+  .cat-add-row { padding: 8px; border-top: 1px solid var(--border); display: none; gap: 5px; }
+  .cat-add-row.visible { display: flex; }
+
+  .cat-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .cat-panel-hdr { padding: 9px 14px; background: var(--bg3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .cat-panel-title { font-size: 13px; font-weight: 600; }
+  .comp-list { flex: 1; overflow-y: auto; }
+  .comp-item { display: flex; align-items: center; gap: 8px; padding: 7px 14px; border-bottom: 1px solid var(--border); }
+  .comp-item:last-child { border-bottom: none; }
+  .comp-item-name { flex: 1; font-size: 13px; min-width: 0; }
+  .comp-edit-inp { flex: 1; min-width: 0; height: 28px; display: none; }
+  .comp-edit-inp.on { display: block; }
+  .comp-item-name.hidden { display: none; }
+  .comp-actions { display: flex; gap: 2px; flex-shrink: 0; }
+  .add-item-row { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+  .placeholder-text { padding: 20px 14px; font-size: 13px; color: var(--muted); }
+
+  /* Utility */
+  .flex-row { display: flex; align-items: center; gap: 8px; }
+
+  /* ── RAID CALCULATOR ── */
+  .raid-layout { display: grid; grid-template-columns: 340px 1fr; gap: 16px; }
+  .raid-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; }
+  .raid-card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 14px; }
+  .raid-field { margin-bottom: 12px; }
+  .raid-field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .raid-field input, .raid-field select { height: 34px; font-size: 13px; }
+  .raid-level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .raid-level-btn { padding: 8px 0; border: 1px solid var(--border2); border-radius: var(--radius); background: none; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; transition: all .12s; }
+  .raid-level-btn:hover { border-color: var(--accent); color: var(--text); }
+  .raid-level-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .result-tile { background: var(--bg3); border-radius: var(--radius); padding: 12px 14px; }
+  .result-tile.accent-tile { background: rgba(59,130,246,.15); border: 1px solid rgba(59,130,246,.3); }
+  .result-tile .r-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .result-tile .r-value { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .result-tile .r-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .result-tile.accent-tile .r-value { color: var(--accent); }
+  .speed-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .speed-row:last-child { border-bottom: none; }
+  .speed-row .s-label { font-size: 12px; color: var(--muted); }
+  .speed-row .s-bar-wrap { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; margin: 0 10px; overflow: hidden; }
+  .speed-row .s-bar { height: 100%; border-radius: 3px; background: var(--accent); transition: width .3s; }
+  .speed-row .s-bar.write { background: var(--success); }
+  .speed-row .s-value { font-size: 12px; font-weight: 600; min-width: 50px; text-align: right; }
+  .raid-warn { background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3); border-radius: var(--radius); padding: 8px 12px; font-size: 12px; color: var(--warning); margin-bottom: 12px; display: none; }
+  .raid-desc { font-size: 12px; color: var(--muted); line-height: 1.6; padding: 10px 14px; background: var(--bg3); border-radius: var(--radius); margin-bottom: 14px; }
+  .raid-desc strong { color: var(--text); }
+  .apply-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .apply-row select { height: 32px; font-size: 12px; flex: 1; min-width: 140px; }
+  .speed-note { font-size: 11px; color: var(--muted); margin-top: 10px; font-style: italic; }
+
+  /* ── STORAGE CALCULATOR ── */
+  .st-layout { display: grid; grid-template-columns: 1fr 360px; gap: 16px; align-items: start; }
+  .st-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 12px; }
+  .st-card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+  .st-groups { display: flex; flex-direction: column; gap: 10px; }
+  .st-group { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .st-group-hdr { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg2); }
+  .st-group-name { font-size: 12px; font-weight: 600; flex: 1; background: none; border: none; color: var(--text); outline: none; border-bottom: 1px solid transparent; padding: 1px 0; }
+  .st-group-name:focus { border-bottom-color: var(--accent); }
+  .st-group-body { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 10px 12px; align-items: end; }
+  .st-field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  .st-field input, .st-field select { height: 30px; font-size: 13px; }
+  .st-group-result { padding: 6px 12px 10px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .st-group-result .g-size { font-size: 14px; font-weight: 600; color: var(--text); }
+  .st-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .st-tile { background: var(--bg3); border-radius: var(--radius); padding: 12px 14px; }
+  .st-tile.main { background: rgba(59,130,246,.15); border: 1px solid rgba(59,130,246,.3); }
+  .st-tile .t-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .st-tile .t-value { font-size: 20px; font-weight: 700; color: var(--text); }
+  .st-tile.main .t-value { color: var(--accent); }
+  .st-tile .t-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .reserve-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .reserve-row label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .reserve-row input[type=range] { flex: 1; accent-color: var(--accent); }
+  .reserve-row .reserve-val { font-size: 13px; font-weight: 600; min-width: 42px; text-align: right; }
+  .st-breakdown { font-size: 12px; }
+  .st-br-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); color: var(--muted); }
+  .st-br-row:last-child { border-bottom: none; }
+  .st-br-row .br-val { font-weight: 600; color: var(--text); }
+  .st-send-btn { width: 100%; margin-top: 4px; }
+
+  /* ── QUOTATION ── */
+  .qt-layout { display: grid; grid-template-columns: 1fr 380px; gap: 16px; align-items: start; }
+  .qt-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 12px; }
+  .qt-card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .qt-field { margin-bottom: 10px; }
+  .qt-field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+  .qt-field input, .qt-field select, .qt-field textarea { font-size: 13px; }
+  .qt-field textarea { height: 60px; resize: vertical; }
+  .qt-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .qt-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  /* Products selector */
+  .product-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .product-chip { padding: 5px 12px; font-size: 12px; border: 1px solid var(--border2); border-radius: 100px; cursor: pointer; color: var(--muted); background: none; transition: all .12s; display: flex; align-items: center; gap: 5px; }
+  .product-chip:hover { border-color: var(--accent); color: var(--text); }
+  .product-chip.on { border-color: var(--accent); color: #fff; background: var(--accent); }
+  .product-chip .chip-abbrev { font-weight: 700; font-size: 11px; }
+
+  /* License sections */
+  .lic-sections { display: flex; flex-direction: column; gap: 14px; }
+  .lic-section { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .lic-section-hdr { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+  .lic-section-title { font-size: 12px; font-weight: 600; flex: 1; }
+  .lic-abbrev-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 100px; background: var(--accent); color: #fff; }
+  .lic-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .lic-table th { padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .lic-table th.num { text-align: right; }
+  .lic-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .lic-table tr:last-child td { border-bottom: none; }
+  .lic-table tr.lic-off td { opacity: .4; }
+  .lic-table td.code { font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+  .lic-table td.desc { color: var(--text); line-height: 1.4; }
+  .lic-table td.num { text-align: right; }
+  .lic-table input[type=number] { width: 64px; height: 26px; font-size: 12px; text-align: right; }
+  .lic-table input[type=number].price-inp { width: 80px; }
+  .lic-chk { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
+  .lic-qty-cell { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+  .lic-qbtn { width: 20px; height: 20px; border-radius: 3px; border: 1px solid var(--border2); background: none; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; color: var(--text); }
+  .lic-qbtn:hover { background: var(--bg); }
+
+  /* Quote ID preview */
+  .qt-id-preview { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--accent); padding: 8px 12px; background: var(--bg3); border-radius: var(--radius); margin-bottom: 10px; letter-spacing: .03em; }
+  .qt-filename-preview { font-size: 11px; color: var(--muted); margin-bottom: 14px; word-break: break-all; }
+  .qt-summary-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .qt-summary-row:last-child { border-bottom: none; }
+  .qt-summary-row .val { font-weight: 600; }
+  .qt-total-row { display: flex; justify-content: space-between; padding: 10px 0 0; margin-top: 6px; border-top: 2px solid var(--border2); }
+  .qt-total-row .lbl { font-size: 13px; color: var(--muted); }
+  .qt-total-row .val { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .export-btn-row { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+
+
+  /* ── PRICELIST EDITOR ── */
+  .pl-layout { display: grid; grid-template-columns: 220px 1fr; gap: 14px; min-height: 500px; }
+  .pl-sidebar { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .pl-sidebar-hdr { padding: 9px 12px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center; justify-content: space-between; }
+  .pl-group-list { flex: 1; overflow-y: auto; }
+  .pl-group-item { padding: 8px 12px; font-size: 12px; cursor: pointer; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; transition: background .1s; }
+  .pl-group-item:hover { background: var(--bg3); color: var(--text); }
+  .pl-group-item.active { background: rgba(59,130,246,.15); color: var(--accent); font-weight: 600; }
+  .pl-group-item .pl-cnt { font-size: 10px; background: var(--bg3); border-radius: 100px; padding: 1px 6px; }
+  .pl-group-item.active .pl-cnt { color: var(--accent); }
+  .pl-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .pl-panel-hdr { padding: 9px 14px; background: var(--bg3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .pl-panel-title { font-size: 13px; font-weight: 600; }
+  .pl-upload-row { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .pl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pl-table th { padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .pl-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .pl-table tr:last-child td { border-bottom: none; }
+  .pl-table tr.deprecated td { opacity: .45; }
+  .pl-table tr.deprecated td .pl-code { text-decoration: line-through; }
+  .pl-code { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .pl-desc-inp { width: 100%; height: 26px; font-size: 11px; background: none; border: none; color: var(--text); outline: none; }
+  .pl-desc-inp:focus, .pl-code:focus { background: var(--bg3); border-radius: 4px; padding: 0 4px; }
+  .pl-table input { background: none; border: 1px solid transparent; color: var(--text); border-radius: 4px; padding: 2px 4px; transition: border-color .12s; }
+  .pl-table input:hover { border-color: var(--border2); }
+  .pl-table input:focus { border-color: var(--accent); background: var(--bg3); outline: none; }
+  .pl-desc-inp:focus { background: var(--bg3); border-radius: 4px; padding: 0 4px; }
+  .pl-price-inp { width: 80px; height: 26px; font-size: 12px; text-align: right; }
+  .pl-depr-badge { font-size: 9px; padding: 1px 6px; background: rgba(245,158,11,.15); color: var(--warning); border-radius: 100px; white-space: nowrap; }
+  .pl-stats { font-size: 11px; color: var(--muted); padding: 6px 14px; border-bottom: 1px solid var(--border); display: none; }
+  .pl-stats.visible { display: block; }
+  .pl-stat-badge { display: inline-block; margin-right: 8px; padding: 2px 7px; border-radius: 100px; font-size: 10px; font-weight: 600; }
+  .pl-stat-badge.updated { background: rgba(34,197,94,.15); color: var(--success); }
+  .pl-stat-badge.added { background: rgba(59,130,246,.15); color: var(--accent); }
+  .pl-stat-badge.deprecated { background: rgba(245,158,11,.15); color: var(--warning); }
+
+  .ver-opt { padding: 6px 12px; font-size: 13px; cursor: pointer; color: var(--text); }
+  .ver-opt:hover { background: var(--bg3); color: var(--accent); }
+
+  /* ── Component catalog meta fields ── */
+  .comp-cpu-meta input[type=number],
+  .comp-cpu-meta input[type=text],
+  .comp-cpu-meta select,
+  .add-item-row input[type=number] {
+    -moz-appearance: textfield;
+    height: 26px;
+    font-size: 12px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .comp-cpu-meta input[type=number]::-webkit-inner-spin-button,
+  .comp-cpu-meta input[type=number]::-webkit-outer-spin-button,
+  .add-item-row input[type=number]::-webkit-inner-spin-button,
+  .add-item-row input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Specific widths for each field type */
+  .comp-cpu-meta input[id^="cpu-mc-"]   { width: 48px; }  /* mem channels / capacity */
+  .comp-cpu-meta input[id^="ci-tdp-"]   { width: 58px; }  /* TDP */
+  .comp-cpu-meta input[id^="ci-slots-"] { width: 48px; }  /* slots */
+  .comp-cpu-meta input[id^="ci-socket-"]{ width: 52px; }  /* socket */
+  .comp-cpu-meta input[id^="ci-px"]     { width: 40px; }  /* pcie counts */
+  .comp-cpu-meta input[id^="ci-ramslots-"] { width: 44px; }
+  .comp-cpu-meta select                 { min-width: 70px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="app-header">
+    <div class="app-logo"><i class="ti ti-server"></i></div>
+    <div>
+      <div class="app-title">Stream Labs — Server Configurator</div>
+      <div class="app-sub">catalog updated: <span id="catalog-date">—</span></div>
+    </div>
+  </div>
+
+  <div class="tabs" style="display:flex;align-items:center">
+    <button class="tab active" data-tab="cfg"><i class="ti ti-cpu"></i> Configurator</button>
+    <button class="tab" data-tab="cat"><i class="ti ti-books"></i> Component Catalog</button>
+    <button class="tab" data-tab="raid"><i class="ti ti-device-floppy"></i> RAID Calculator</button>
+    <button class="tab" data-tab="storage"><i class="ti ti-database"></i> Storage Calculator</button>
+    <button class="tab" data-tab="quote"><i class="ti ti-file-invoice"></i> Quotation</button>
+    <button class="tab" data-tab="pricelist"><i class="ti ti-tags"></i> Pricelist</button>
+    <button class="tab" data-tab="saved"><i class="ti ti-archive"></i> Saved</button>
+    <button class="tab" data-tab="srvcalc"><i class="ti ti-cpu"></i> Server Calculator</button>
+    <div style="margin-left:auto;padding-right:8px;display:flex;align-items:center;gap:6px">
+      <select id="current-user-sel" onchange="setCurrentUser(this.value)" title="Current user — used as Jira task author and to tag/filter saved quotations"
+        style="height:28px;font-size:12px;max-width:160px">
+        <option value="">— no user —</option>
+      </select>
+      <button onclick="openUsersModal()" title="Manage users"
+        style="height:28px;width:28px;padding:0;background:none;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center">
+        <i class="ti ti-settings" style="font-size:13px"></i>
+      </button>
+      <button onclick="location.reload()" title="Reload all data from server (clears current session)"
+        style="height:28px;padding:0 12px;font-size:12px;background:none;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px">
+        <i class="ti ti-refresh" style="font-size:13px"></i> Reload data
+      </button>
+    </div>
+  </div>
+
+  <!-- ── CONFIGURATOR ── -->
+  <div id="pane-cfg" class="pane active">
+    <div class="cfg-toolbar">
+      <div>
+        <div class="cfg-toolbar-title">Server Configuration</div>
+        <div class="cfg-toolbar-sub">Select components, generate spec table for Jira / procurement</div>
+      </div>
+      <div class="flex-row">
+        <button class="btn primary" id="btn-add-server"><i class="ti ti-plus"></i> Add Server</button>
+        <button class="btn" id="btn-build-table"><i class="ti ti-table"></i> Build Table</button>
+        <button class="btn" onclick="openJiraModal()" style="color:var(--accent);border-color:var(--accent)"><i class="ti ti-brand-jira"></i> Create Jira Task</button>
+      </div>
+    </div>
+    <div class="servers-list" id="srv-list">
+      <div class="empty-state" id="srv-empty">
+        <i class="ti ti-server-off"></i>
+        Click "Add Server" to start a configuration
+      </div>
+    </div>
+    <div class="out-area" id="out-area" style="display:none">
+      <div class="out-hdr">
+        <span class="out-title"><i class="ti ti-clipboard-text"></i> Spec — ready to paste into Jira</span>
+        <div class="flex-row">
+          <button class="btn" id="btn-copy"><i class="ti ti-copy"></i> Copy</button>
+          <span class="toast" id="toast"><i class="ti ti-check"></i> Copied</span>
+        </div>
+      </div>
+      <div class="out-box" id="out-box"></div>
+    </div>
+  </div>
+
+  <!-- ── CATALOG ── -->
+  <div id="pane-cat" class="pane">
+    <div class="cat-layout">
+      <div class="cat-sidebar">
+        <div class="cat-sidebar-hdr">
+          Categories
+          <button class="btn ghost" id="btn-show-add-cat" title="Add category" style="height:24px;padding:0 6px"><i class="ti ti-folder-plus" style="font-size:14px"></i></button>
+        </div>
+        <div class="cat-items" id="cat-items"></div>
+        <div class="cat-add-row" id="cat-add-row">
+          <input type="text" id="cat-add-inp" placeholder="Category name" style="flex:1;height:28px">
+          <button class="btn primary" id="btn-cat-confirm" style="height:28px;padding:0 8px"><i class="ti ti-check"></i></button>
+          <button class="btn" id="btn-cat-cancel" style="height:28px;padding:0 8px"><i class="ti ti-x"></i></button>
+        </div>
+      </div>
+      <div class="cat-panel">
+        <div class="cat-panel-hdr">
+          <span class="cat-panel-title" id="cat-panel-title">Select a category</span>
+          <button class="btn danger" id="btn-del-cat" style="display:none"><i class="ti ti-trash" style="font-size:13px"></i> Delete category</button>
+        </div>
+        <div class="comp-list" id="comp-list">
+          <div class="placeholder-text">Select a category on the left to edit its components.</div>
+        </div>
+        <div class="add-item-row" id="add-item-row" style="display:none;flex-wrap:wrap;gap:6px">
+          <input type="text" id="add-item-inp" placeholder="Component name..." style="flex:1;min-width:160px">
+          <!-- CPU extra fields -->
+          <div id="add-cpu-fields" style="display:none;align-items:center;gap:6px;flex-wrap:wrap">
+            <input type="text" id="add-cpu-socket" value="SP3" placeholder="Socket"
+              style="width:52px;height:28px;font-size:12px" title="CPU Socket">
+            <input type="number" id="add-cpu-mc" value="8" min="1" max="24"
+              style="width:44px;height:28px;font-size:12px" placeholder="Ch" title="Memory channels">
+            <select id="add-cpu-mt" style="height:28px;font-size:12px">
+              <option>RDDR4</option><option>RDDR5</option>
+              <option>DDR4</option><option>DDR5</option>
+            </select>
+            <input type="number" id="add-cpu-tdp" value="0" min="0"
+              style="width:52px;height:28px;font-size:12px" placeholder="TDP W" title="TDP in Watts">
+          </div>
+          <!-- RAM extra fields -->
+          <div id="add-ram-fields" style="display:none;align-items:center;gap:6px;flex-wrap:wrap">
+            <select id="add-ram-mt" style="height:28px;font-size:12px">
+              <option>RDDR4</option><option>RDDR5</option>
+              <option>DDR4</option><option>DDR5</option>
+            </select>
+            <input type="number" id="add-ram-cap" value="16" min="1"
+              style="width:60px;height:28px;font-size:12px" placeholder="Gb" title="Capacity in Gb">
+            <span style="font-size:12px;color:var(--muted)">Gb</span>
+          </div>
+          <!-- Motherboard extra fields -->
+          <div id="add-mb-fields" style="display:none;align-items:center;gap:6px;flex-wrap:wrap">
+            <input type="text" id="add-mb-socket" value="SP3" placeholder="Socket"
+              style="width:52px;height:28px;font-size:12px" title="CPU Socket">
+            <input type="number" id="add-mb-cpusockets" value="1" min="1" max="4"
+              style="width:36px;height:28px;font-size:12px" title="Number of CPU sockets on this board">×CPU
+            <input type="number" id="add-mb-ramslots" value="8" min="1" max="32"
+              style="width:44px;height:28px;font-size:12px" placeholder="RAM" title="RAM slots">
+            <span style="font-size:11px;color:var(--muted)">PCIe:</span>
+            <input type="number" id="add-mb-px16" value="1" min="0" max="8"
+              style="width:36px;height:28px;font-size:12px" title="PCIe x16 slots">×16
+            <input type="number" id="add-mb-px8" value="0" min="0" max="8"
+              style="width:36px;height:28px;font-size:12px" title="PCIe x8 slots">×8
+            <input type="number" id="add-mb-px4" value="0" min="0" max="8"
+              style="width:36px;height:28px;font-size:12px" title="PCIe x4 slots">×4
+          </div>
+          <!-- Case expansion slots field -->
+          <div id="add-case-fields" style="display:none;align-items:center;gap:6px">
+            <label style="font-size:12px;color:var(--muted)">Expansion slots:</label>
+            <input type="number" id="add-case-slots" value="7" min="1" max="20"
+              style="width:60px;height:28px;font-size:12px">
+          </div>
+          <!-- TDP-only fields (GPU, Network, RAID, PCI cards, HDD) -->
+          <div id="add-tdp-fields" style="display:none;align-items:center;gap:6px">
+            <label style="font-size:12px;color:var(--muted)">TDP (W):</label>
+            <input type="number" id="add-tdp-val" value="0" min="0"
+              style="width:60px;height:28px;font-size:12px">
+            <label style="font-size:12px;color:var(--muted)">Slots:</label>
+            <input type="number" id="add-tdp-slots" value="1" min="1" max="4"
+              style="width:44px;height:28px;font-size:12px" title="Physical expansion slots used">
+            <span id="add-pcie-wrap" style="display:none;align-items:center;gap:4px">
+              <label style="font-size:12px;color:var(--muted)">PCIe:</label>
+              <select id="add-pcie-slot" style="height:28px;font-size:12px">
+                <option>x16</option><option>x8</option><option>x4</option><option>x1</option>
+              </select>
+            </span>
+          </div>
+          <button class="btn primary" id="btn-add-item"><i class="ti ti-plus"></i> Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RAID CALCULATOR ── -->
+  <div id="pane-raid" class="pane">
+    <div class="raid-layout">
+
+      <!-- Left: inputs -->
+      <div>
+        <div class="raid-card">
+          <div class="raid-card-title">RAID Level</div>
+          <div class="raid-level-grid" id="raid-level-grid">
+            <button class="raid-level-btn" data-level="0">RAID 0</button>
+            <button class="raid-level-btn active" data-level="1">RAID 1</button>
+            <button class="raid-level-btn" data-level="5">RAID 5</button>
+            <button class="raid-level-btn" data-level="6">RAID 6</button>
+            <button class="raid-level-btn" data-level="10">RAID 10</button>
+            <button class="raid-level-btn" data-level="50">RAID 50</button>
+          </div>
+        </div>
+
+        <div class="raid-card" style="margin-top:12px">
+          <div class="raid-card-title">Disks</div>
+          <div class="raid-field">
+            <label>Number of disks</label>
+            <input type="number" id="r-count" value="4" min="1" max="64">
+          </div>
+          <div class="raid-field" style="display:flex;gap:8px">
+            <div style="flex:1">
+              <label>Disk capacity</label>
+              <input type="number" id="r-size" value="4" min="1" step="0.5">
+            </div>
+            <div style="width:80px">
+              <label>Unit</label>
+              <select id="r-unit">
+                <option value="1">TB</option>
+                <option value="0.001">GB</option>
+              </select>
+            </div>
+          </div>
+          <div class="raid-field">
+            <label>Disk type (for speed estimate)</label>
+            <select id="r-disktype">
+              <option value="hdd_sata">HDD SATA 7200rpm</option>
+              <option value="hdd_sas">HDD SAS 15000rpm</option>
+              <option value="ssd_sata">SSD SATA</option>
+              <option value="ssd_nvme">SSD NVMe</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: results -->
+      <div>
+        <div class="raid-warn" id="raid-warn"></div>
+
+        <div class="raid-card" style="margin-bottom:12px">
+          <div class="raid-card-title">Capacity</div>
+          <div class="results-grid">
+            <div class="result-tile accent-tile">
+              <div class="r-label">Usable capacity</div>
+              <div class="r-value" id="r-usable">—</div>
+              <div class="r-sub" id="r-usable-sub"></div>
+            </div>
+            <div class="result-tile">
+              <div class="r-label">Raw total</div>
+              <div class="r-value" id="r-raw">—</div>
+              <div class="r-sub" id="r-overhead-sub"></div>
+            </div>
+            <div class="result-tile">
+              <div class="r-label">Overhead</div>
+              <div class="r-value" id="r-overhead">—</div>
+              <div class="r-sub" id="r-eff-sub"></div>
+            </div>
+            <div class="result-tile">
+              <div class="r-label">Fault tolerance</div>
+              <div class="r-value" id="r-fault">—</div>
+              <div class="r-sub" id="r-fault-sub"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="raid-card" style="margin-bottom:12px">
+          <div class="raid-card-title">Relative Speed (theoretical multipliers vs single disk)</div>
+          <div class="speed-row">
+            <span class="s-label">Read</span>
+            <div class="s-bar-wrap"><div class="s-bar" id="r-read-bar" style="width:0%"></div></div>
+            <span class="s-value" id="r-read-val">—</span>
+          </div>
+          <div class="speed-row">
+            <span class="s-label">Write</span>
+            <div class="s-bar-wrap"><div class="s-bar write" id="r-write-bar" style="width:0%"></div></div>
+            <span class="s-value" id="r-write-val">—</span>
+          </div>
+          <div class="speed-note">* Theoretical multipliers relative to a single disk. Actual performance depends on controller, drive model, and workload.</div>
+        </div>
+
+        <div class="raid-card">
+          <div class="raid-card-title">Apply to Configurator</div>
+          <div class="raid-desc" id="raid-desc">Select a RAID level to see description.</div>
+          <div class="apply-row">
+            <select id="apply-srv-sel">
+              <option value="">— select server —</option>
+            </select>
+            <button class="btn primary" id="btn-apply-raid"><i class="ti ti-transfer-in"></i> Apply disks to server</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── STORAGE CALCULATOR ── -->
+  <div id="pane-storage" class="pane">
+    <div class="st-layout">
+
+      <!-- Left: groups -->
+      <div>
+        <div class="st-card">
+          <div class="st-card-title">
+            Service Groups
+            <button class="btn primary" id="btn-add-group" style="height:28px;font-size:12px"><i class="ti ti-plus"></i> Add Group</button>
+          </div>
+          <div class="st-groups" id="st-groups">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+        <div class="st-card">
+          <div class="st-card-title">Reserve</div>
+          <div class="reserve-row">
+            <label>Overhead reserve</label>
+            <input type="range" id="st-reserve" min="0" max="100" value="20" step="5">
+            <span class="reserve-val" id="st-reserve-val">20%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: summary -->
+      <div>
+        <div class="st-card">
+          <div class="st-card-title">Summary</div>
+          <div class="st-summary-grid">
+            <div class="st-tile main">
+              <div class="t-label">Required (with reserve)</div>
+              <div class="t-value" id="st-total">0 TB</div>
+              <div class="t-sub" id="st-total-sub"></div>
+            </div>
+            <div class="st-tile">
+              <div class="t-label">Net data</div>
+              <div class="t-value" id="st-net">0 TB</div>
+              <div class="t-sub" id="st-net-sub"></div>
+            </div>
+          </div>
+          <div class="st-breakdown" id="st-breakdown"></div>
+        </div>
+
+        <div class="st-card">
+          <div class="st-card-title">Send to RAID Calculator</div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Pre-fill the required capacity in RAID Calculator to find the right disk configuration.</p>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <label style="font-size:12px;color:var(--muted);white-space:nowrap">Max disks</label>
+            <input type="number" id="st-max-disks" value="16" min="3" max="64" style="width:70px;height:30px;font-size:13px">
+            <span style="font-size:11px;color:var(--muted)">Standard 3U case = 16</span>
+          </div>
+          <button class="btn primary st-send-btn" id="btn-st-to-raid"><i class="ti ti-transfer-in"></i> Open in RAID Calculator</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── QUOTATION ── -->
+  <div id="pane-quote" class="pane">
+
+    <div class="qt-layout">
+
+      <!-- LEFT column -->
+      <div>
+
+        <!-- Client data -->
+        <div class="qt-card">
+          <div class="qt-card-title">Client</div>
+          <div class="qt-row2">
+            <div class="qt-field"><label>Company *</label><input type="text" id="qt-company" oninput="qtUpdate()"></div>
+            <div class="qt-field"><label>Contact name</label><input type="text" id="qt-contact" onblur="qtNormalizeContactName()" title="Auto-corrects to Title Case on blur (fixes ALL CAPS names from Pipedrive)"></div>
+          </div>
+          <div class="qt-field"><label>Address</label><input type="text" id="qt-address"></div>
+          <div class="qt-row3">
+            <div class="qt-field"><label>Country</label><input type="text" id="qt-country"></div>
+            <div class="qt-field"><label>Phone</label><input type="text" id="qt-phone"></div>
+            <div class="qt-field"><label>Email</label><input type="text" id="qt-email"></div>
+          </div>
+        </div>
+
+        <!-- Quote meta -->
+        <div class="qt-card">
+          <div class="qt-card-title">
+            Quote Details
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:11px;color:var(--muted)">Company:</span>
+              <select id="qt-company-sel" onchange="switchCompany(this.value)"
+                style="height:26px;font-size:12px;max-width:200px"></select>
+              <button class="btn ghost" onclick="showCompaniesEditor()"
+                style="height:24px;padding:0 6px" title="Manage companies">
+                <i class="ti ti-settings" style="font-size:13px"></i></button>
+            </div>
+          </div>
+
+          <!-- Companies editor modal -->
+          <div id="companies-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center">
+            <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:20px 24px;width:520px;max-height:80vh;overflow-y:auto">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                <span style="font-size:14px;font-weight:600">Company Profiles</span>
+                <button class="btn ghost" onclick="hideCompaniesEditor()"><i class="ti ti-x"></i></button>
+              </div>
+              <div id="companies-list" style="margin-bottom:12px"></div>
+              <div style="padding-top:10px;border-top:1px solid var(--border)">
+                <div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px">Add new company</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                  <input id="nc-name"    type="text" placeholder="Company name" style="height:28px;font-size:12px">
+                  <input id="nc-address" type="text" placeholder="Address" style="height:28px;font-size:12px">
+                  <input id="nc-vat"     type="text" placeholder="VAT ID" style="height:28px;font-size:12px">
+                  <input id="nc-email"   type="text" placeholder="Email" style="height:28px;font-size:12px">
+                </div>
+                <div style="display:flex;gap:6px;align-items:center">
+                  <label class="btn" style="cursor:pointer;height:28px;font-size:12px">
+                    <i class="ti ti-upload"></i> Logo
+                    <input type="file" id="nc-logo-file" accept="image/*" style="display:none"
+                      onchange="uploadLogoForNew(this)">
+                  </label>
+                  <span id="nc-logo-name" style="font-size:11px;color:var(--muted)">No logo</span>
+                  <button class="btn primary" onclick="addCompany()" style="height:28px;margin-left:auto">
+                    <i class="ti ti-plus"></i> Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="qt-row3">
+            <div class="qt-field">
+              <label>Deal ID (PP…)</label>
+              <div style="display:flex;gap:6px;align-items:center">
+                <input type="text" id="qt-deal-id" placeholder="7621" oninput="qtUpdate()" style="flex:1">
+                <button class="btn ghost" id="btn-pipedrive-fetch" onclick="fetchFromPipedrive()"
+                  style="height:30px;padding:0 10px;font-size:12px;white-space:nowrap" title="Fill client data from Pipedrive">
+                  <i class="ti ti-brand-pipedrive"></i> Fetch
+                </button>
+                <span id="pipedrive-status" style="font-size:11px;color:var(--muted)"></span>
+              </div>
+            </div>
+            <div class="qt-field" style="position:relative">
+              <label>Version</label>
+              <div style="display:flex;gap:0;height:32px">
+                <input type="text" id="qt-version" value="V1"
+                  style="width:54px;border-radius:var(--radius) 0 0 var(--radius);font-size:13px"
+                  oninput="qtUpdate()" onkeydown="if(event.key==='Escape')closeVersionDrop()">
+                <button onclick="toggleVersionDrop()" type="button"
+                  style="width:24px;border:1px solid var(--border2);border-left:none;border-radius:0 var(--radius) var(--radius) 0;background:var(--bg3);cursor:pointer;color:var(--muted)">
+                  <i class="ti ti-chevron-down" style="font-size:11px"></i>
+                </button>
+              </div>
+              <div id="version-drop" style="display:none;position:absolute;top:56px;left:0;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);z-index:100;min-width:78px;box-shadow:0 4px 12px rgba(0,0,0,.3)">
+                <div class="ver-opt" onclick="pickVersion('V1')">V1</div>
+                <div class="ver-opt" onclick="pickVersion('V2')">V2</div>
+                <div class="ver-opt" onclick="pickVersion('V3')">V3</div>
+                <div class="ver-opt" onclick="pickVersion('V4')">V4</div>
+                <div class="ver-opt" onclick="pickVersion('V5')">V5</div>
+              </div>
+            </div>
+            <div class="qt-field"><label>Valid until</label>
+              <input type="date" id="qt-valid-date" oninput="onValidDateChange()"
+                style="height:32px;font-size:13px">
+            </div>
+            <div class="qt-field"><label>Valid (days)</label>
+              <input type="number" id="qt-valid-days" value="30" min="1"
+                oninput="onValidDaysChange()">
+            </div>
+          </div>
+          <div class="qt-row3">
+          </div>
+          <div class="qt-row2">
+            <div class="qt-field">
+              <label>Signed by
+                <button class="btn ghost" onclick="showContactsEditor()" title="Edit contacts list" style="height:18px;padding:0 4px;margin-left:4px;vertical-align:middle"><i class="ti ti-settings" style="font-size:12px"></i></button>
+              </label>
+              <select id="qt-signed-by-sel" onchange="onSignedBySelect()" style="height:32px;font-size:13px">
+                <option value="">— select —</option>
+              </select>
+              <input type="text" id="qt-signed-by" placeholder="Name" style="margin-top:4px;font-size:12px;height:28px">
+            </div>
+            <div class="qt-field">
+              <label>Sales contact
+                <button class="btn ghost" onclick="showContactsEditor()" title="Edit contacts list" style="height:18px;padding:0 4px;margin-left:4px;vertical-align:middle"><i class="ti ti-settings" style="font-size:12px"></i></button>
+              </label>
+              <select id="qt-sales-contact-sel" onchange="onContactSelect()" style="height:32px;font-size:13px">
+                <option value="">— select —</option>
+              </select>
+            </div>
+          </div>
+          <div class="qt-row2">
+            <div class="qt-field"><label>Name (editable)</label><input type="text" id="qt-sales-contact" placeholder="Name"></div>
+            <div class="qt-field"><label>Email (editable)</label><input type="text" id="qt-sales-email" placeholder="email@stream-labs.com"></div>
+          </div>
+
+          <!-- Contacts editor modal -->
+          <div id="contacts-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center">
+            <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:20px 24px;width:460px;max-height:80vh;overflow-y:auto">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                <span style="font-size:14px;font-weight:600">Sales Contacts</span>
+                <button class="btn ghost" onclick="hideContactsEditor()" style="height:28px"><i class="ti ti-x"></i></button>
+              </div>
+              <div id="contacts-list" style="margin-bottom:12px"></div>
+              <div style="display:flex;gap:6px;padding-top:10px;border-top:1px solid var(--border)">
+                <input type="text" id="new-contact-name" placeholder="Name" style="flex:1;height:30px;font-size:12px">
+                <input type="text" id="new-contact-email" placeholder="email@stream-labs.com" style="flex:1;height:30px;font-size:12px">
+                <button class="btn primary" onclick="addContact()" style="height:30px;padding:0 10px;white-space:nowrap"><i class="ti ti-plus"></i> Add</button>
+              </div>
+            </div>
+          </div>
+          <div class="qt-field"><label>Project summary / notes</label><textarea id="qt-summary" placeholder="Brief project description for the quotation..."></textarea></div>
+        </div>
+
+        <!-- Hardware -->
+        <div class="qt-card">
+          <div class="qt-card-title">
+            Hardware
+            <div style="display:flex;align-items:center;gap:6px">
+              <button class="btn" style="height:28px;font-size:12px;color:var(--accent);border-color:var(--accent)"
+                onclick="importFromConfigurator()" title="Pull servers from the Configurator tab">
+                <i class="ti ti-transfer-in"></i> Import from Configurator
+              </button>
+              <select id="hw-catalog-sel" style="height:28px;font-size:12px;max-width:220px">
+                <option value="">— quick-add from catalog —</option>
+                <optgroup label="Servers">
+                  <option value="5427-3U-SL|3U Stream Labs branded server">5427-3U-SL — 3U Stream Labs branded server</option>
+                </optgroup>
+                <optgroup label="MULTITUNER / AirX RMS">
+                  <option value="MT-4CH-V2|4 channels version">MT-4CH-V2 — 4 channels version</option>
+                  <option value="MT-8CH-V2|8 channels version">MT-8CH-V2 — 8 channels version</option>
+                  <option value="MT-12CH-V2|12 channels version">MT-12CH-V2 — 12 channels version</option>
+                  <option value="MT-16CH-V2|16 channels version">MT-16CH-V2 — 16 channels version</option>
+                </optgroup>
+                <optgroup label="TS Analyzer">
+                  <option value="ALR-IP-2ASI-RF|Analyzer - IP MPEG TS, 2 ASI & RF version">ALR-IP-2ASI-RF — Analyzer - IP MPEG TS, 2 ASI & RF version</option>
+                  <option value="ALR-IP-2ASI|Analyzer - IP MPEG TS, 2 ASI">ALR-IP-2ASI — Analyzer - IP MPEG TS, 2 ASI</option>
+                </optgroup>
+                <optgroup label="Playback & Capture cards">
+                  <option value="MH4GTX|MН4GTX (4 input 3G-SDI/ASI) card">MH4GTX — MН4GTX (4 input 3G-SDI/ASI) card</option>
+                  <option value="MH4LM|[discontinued] MH4LM (4 input HD/SD-SDI, ASI/CVBS) card">MH4LM — [discontinued] MH4LM (4 input HD/SD-SDI, ASI/CVBS) card</option>
+                  <option value="MS4-SDI|MS4 (4 input SD-SDI, ASI) card">MS4-SDI — MS4 (4 input SD-SDI, ASI) card</option>
+                  <option value="MS4-A|MS4-A or full version (4 input SD-SDI, ASI, CVBS) card">MS4-A — MS4-A or full version (4 input SD-SDI, ASI, CVBS) card</option>
+                  <option value="MS4-S|MS4 Stripped (4 input of CVBS only) card">MS4-S — MS4 Stripped (4 input of CVBS only) card</option>
+                  <option value="MS2-SDI|MS2 (2 input SD-SDI, ASI) card">MS2-SDI — MS2 (2 input SD-SDI, ASI) card</option>
+                  <option value="MS2-A|MS2-A (2 input SD-SDI, ASI, CVBS) card">MS2-A — MS2-A (2 input SD-SDI, ASI, CVBS) card</option>
+                  <option value="MS416|MS416 (16 inputs CVBS) AV signal input card">MS416 — MS416 (16 inputs CVBS) AV signal input card</option>
+                  <option value="BAL-XLR|Balanced Audio Card (XLR/BIG TRS) - Option for any Capture card">BAL-XLR — Balanced Audio Card (XLR/BIG TRS) - Option for any Capt</option>
+                  <option value="2R1T|2R1T - 2 HDMI inputs, 1 HDMI output, 4 CVBS inputs, 1 CVBS output">2R1T — 2R1T - 2 HDMI inputs, 1 HDMI output, 4 CVBS inputs, 1 C</option>
+                  <option value="4R1T-XLR|4R1T with balanced audio (full card) - 4 CVBS inputs / 2 CVBS outputs">4R1T-XLR — 4R1T with balanced audio (full card) - 4 CVBS inputs / </option>
+                  <option value="4R1T|4R1T Unbalanced - Composite capture/playback card Analog video/audio capture and playback">4R1T — 4R1T Unbalanced - Composite capture/playback card Analo</option>
+                  <option value="ALPHA-HD|[discontinued] Alpha SDI HD (Input + Output SD-SDI/HD-SDI) card">ALPHA-HD — [discontinued] Alpha SDI HD (Input + Output SD-SDI/HD-S</option>
+                  <option value="ALPHA-PLUS|[discontinued] Alpha Plus PCI-E (Composite I/O, S-Video I/O, YUV, alpha signal output) card">ALPHA-PLUS — [discontinued] Alpha Plus PCI-E (Composite I/O, S-Video</option>
+                  <option value="MSP2-ASI|MSP2 (Input + Output or Dual Output SD-SDI/ASI) card">MSP2-ASI — MSP2 (Input + Output or Dual Output SD-SDI/ASI) card</option>
+                  <option value="|Analog Tail cable - 20$; Single PCB with bracket - 25$; Double PCB with bracket - 35$; Single SET - 50$;"> — Analog Tail cable - 20$; Single PCB with bracket - 25$;</option>
+                </optgroup>
+                <optgroup label="Other Devices">
+                  <option value="SMD-T1-V4|Stream MultiDelay">SMD-T1-V4 — Stream MultiDelay</option>
+                  <option value="WD-USB-1|WatchDog USB Timer">WD-USB-1 — WatchDog USB Timer</option>
+                </optgroup>
+              </select>
+              <button class="btn" style="height:28px;padding:0 10px;font-size:12px" onclick="hwAddFromCatalog()"><i class="ti ti-plus"></i> Add</button>
+            </div>
+          </div>
+          <table class="lic-table" style="width:100%">
+            <thead><tr><th>Part #</th><th>Description</th><th class="num">Qty</th><th class="num">List price</th><th class="num">Margin</th><th class="num">Unit price</th><th class="num">Total</th><th style="width:28px"></th></tr></thead>
+            <tbody id="hw-tbody"></tbody>
+          </table>
+          <button class="add-row-btn" onclick="addHwRow()" style="margin-top:6px"><i class="ti ti-plus"></i> Add blank row</button>
+        </div>
+
+        <!-- Products / Licenses -->
+        <div class="qt-card">
+          <div class="qt-card-title">Software Licenses</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Select products to include in this quotation:</div>
+          <div class="product-picker" id="product-picker"></div>
+          <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <label style="font-size:12px;color:var(--muted);white-space:nowrap">SW Discount</label>
+              <input type="number" id="qt-sw-disc" value="25" min="0" max="100" style="width:60px;height:28px;font-size:13px" oninput="qtCalc()"> <span style="font-size:12px;color:var(--muted)">%</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <label style="font-size:12px;color:var(--muted);white-space:nowrap">Currency</label>
+              <select id="qt-currency" onchange="qtCalc()" style="height:28px;font-size:12px">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+              </select>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px" id="usd-rate-row">
+              <label style="font-size:12px;color:var(--muted);white-space:nowrap">USD/EUR rate</label>
+              <input type="number" id="qt-usd-rate" value="1.08" min="0.01" step="0.0001" style="width:70px;height:28px;font-size:12px" oninput="qtCalc()">
+              <button onclick="fetchExchangeRate()" id="btn-fetch-rate" title="Fetch live rate from ECB"
+                style="height:28px;padding:0 8px;font-size:12px;border:1px solid var(--border2);background:none;color:var(--muted);border-radius:var(--radius);cursor:pointer">
+                <i class="ti ti-refresh" style="font-size:13px"></i>
+              </button>
+              <span id="rate-fetch-status" style="font-size:10px;color:var(--muted)"></span>
+            </div>
+            <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);cursor:pointer">
+              <input type="checkbox" id="qt-show-both" onchange="qtCalc()"> show both
+              &nbsp;&nbsp;
+              <input type="checkbox" id="qt-show-logos" onchange="qtCalc()"> show product logos
+            </label>
+          </div>
+          <div class="lic-sections" id="lic-sections">
+            <div style="color:var(--muted);font-size:13px;padding:8px 0">Select one or more products above to add license sections.</div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="qt-card">
+          <div class="qt-card-title">Services</div>
+          <!-- SLA auto-calculation row -->
+          <div style="background:var(--bg3);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px;font-size:12px">
+            <div style="font-weight:600;margin-bottom:8px;color:var(--text)">Support (SLA) — auto-calculated</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <label style="color:var(--muted)">Base:</label>
+              <label style="display:flex;align-items:center;gap:4px;cursor:pointer">
+                <input type="checkbox" id="sla-base-sw" checked onchange="calcSLA()"> SW
+              </label>
+              <label style="display:flex;align-items:center;gap:4px;cursor:pointer">
+                <input type="checkbox" id="sla-base-hw" onchange="calcSLA()"> HW
+              </label>
+              <label style="color:var(--muted);margin-left:8px">Rate:</label>
+              <input type="number" id="sla-rate" value="15" min="0" max="100"
+                style="width:54px;height:26px;font-size:12px" oninput="calcSLA()"> %
+              <span style="color:var(--muted)">→</span>
+              <span style="font-weight:600;color:var(--accent)" id="sla-price-display">€ 0</span>
+              <span style="color:var(--muted);font-size:11px">per year</span>
+            </div>
+          </div>
+          <table class="lic-table" style="width:100%;table-layout:fixed">
+            <colgroup>
+              <col style="width:auto">
+              <col style="width:70px">
+              <col style="width:110px">
+              <col style="width:110px">
+              <col style="width:28px">
+            </colgroup>
+            <thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Total</th><th style="width:28px"></th></tr></thead>
+            <tbody id="svc-tbody"></tbody>
+          </table>
+          <button class="add-row-btn" onclick="addSvcRow()" style="margin-top:6px"><i class="ti ti-plus"></i> Add service row</button>
+        </div>
+
+      </div><!-- /LEFT -->
+
+      <!-- RIGHT column: summary + export -->
+      <div>
+        <div class="qt-card">
+          <div class="qt-card-title">Quote ID</div>
+          <div class="qt-id-preview" id="qt-id-preview">PP—_V1_—</div>
+          <div class="qt-filename-preview" id="qt-filename-preview">Filename will appear here</div>
+        </div>
+
+        <div class="qt-card">
+          <div class="qt-card-title">Totals</div>
+          <div class="qt-summary-row"><span>HW (list)</span><span class="val" id="qt-s-hw-list">€ 0</span></div>
+          <div class="qt-summary-row"><span>HW (with margin)</span><span class="val" id="qt-s-hw-margin">€ 0</span></div>
+          <div class="qt-summary-row" style="margin-top:6px"><span>SW (list)</span><span class="val" id="qt-s-sw-list">€ 0</span></div>
+          <div class="qt-summary-row"><span>SW discount</span><span class="val" id="qt-s-sw-disc">0%</span></div>
+          <div class="qt-summary-row"><span>SW (discounted)</span><span class="val" id="qt-s-sw-disc-val">€ 0</span></div>
+          <div class="qt-summary-row" style="margin-top:6px"><span>Services</span><span class="val" id="qt-s-svc">€ 0</span></div>
+          <div class="qt-total-row" style="align-items:center">
+            <span class="lbl">Grand Total</span>
+            <span style="display:flex;align-items:center;gap:6px">
+              <input type="text" id="qt-s-total" value="€ 0"
+                oninput="qtTotalInput()" onblur="qtTotalBlur()"
+                title="Edit to manually override the calculated total"
+                style="width:130px;text-align:right;background:none;border:none;border-bottom:1px dashed var(--border2);color:var(--accent);font-size:18px;font-weight:700;padding:2px 2px">
+              <button type="button" class="qbtn" id="qt-total-reset-btn" onclick="qtResetTotalOverride()"
+                title="Reset to calculated total" style="display:none;font-size:12px">↺</button>
+            </span>
+          </div>
+        </div>
+
+        <div class="qt-card">
+          <div class="qt-card-title">Pipedrive</div>
+          <button class="btn" id="btn-pipedrive-update-value" style="width:100%;justify-content:center" onclick="pipedriveUpdateDealValue()">
+            <i class="ti ti-brand-pipedrive"></i> Update Deal Value
+          </button>
+          <div id="pipedrive-update-status" style="font-size:11px;color:var(--muted);margin-top:6px"></div>
+
+          <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px">
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:6px">
+              File to upload <span style="color:var(--muted)">(defaults to the last exported file — pick a different one if you edited it by hand)</span>
+            </label>
+            <input type="file" id="pd-upload-file" accept=".xlsx,.pdf"
+              style="width:100%;font-size:11px;margin-bottom:8px">
+            <button class="btn" id="btn-pipedrive-upload-file" style="width:100%;justify-content:center" onclick="pipedriveUploadFile()">
+              <i class="ti ti-cloud-upload"></i> Upload to Pipedrive
+            </button>
+            <div id="pipedrive-upload-status" style="font-size:11px;color:var(--muted);margin-top:6px"></div>
+          </div>
+        </div>
+
+        <div class="qt-card">
+          <div class="qt-card-title">Export</div>
+          <div class="export-btn-row">
+            <button class="btn" id="btn-preview" style="width:100%;justify-content:center"><i class="ti ti-eye"></i> Preview in browser</button>
+            <button class="btn primary" id="btn-export-excel" style="width:100%;justify-content:center"><i class="ti ti-table-export"></i> Export Excel (.xlsx)</button>
+          </div>
+          <div id="preview-spinner" style="display:none;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)">
+            <i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> Generating…
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px">
+            Preview opens in a new tab — use <strong>Ctrl+P</strong> to save as PDF.
+          </div>
+          <style>@keyframes spin{to{transform:rotate(360deg)}}
+  /* ── PRICELIST EDITOR ── */
+  .pl-layout { display: grid; grid-template-columns: 220px 1fr; gap: 14px; min-height: 500px; }
+  .pl-sidebar { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .pl-sidebar-hdr { padding: 9px 12px; background: var(--bg3); border-bottom: 1px solid var(--border); font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center; justify-content: space-between; }
+  .pl-group-list { flex: 1; overflow-y: auto; }
+  .pl-group-item { padding: 8px 12px; font-size: 12px; cursor: pointer; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 6px; transition: background .1s; }
+  .pl-group-item:hover { background: var(--bg3); color: var(--text); }
+  .pl-group-item.active { background: rgba(59,130,246,.15); color: var(--accent); font-weight: 600; }
+  .pl-group-item .pl-cnt { font-size: 10px; background: var(--bg3); border-radius: 100px; padding: 1px 6px; }
+  .pl-group-item.active .pl-cnt { color: var(--accent); }
+  .pl-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .pl-panel-hdr { padding: 9px 14px; background: var(--bg3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .pl-panel-title { font-size: 13px; font-weight: 600; }
+  .pl-upload-row { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .pl-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pl-table th { padding: 5px 10px; text-align: left; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .pl-table td { padding: 5px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .pl-table tr:last-child td { border-bottom: none; }
+  .pl-table tr.deprecated td { opacity: .45; }
+  .pl-table tr.deprecated td .pl-code { text-decoration: line-through; }
+  .pl-code { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .pl-desc-inp { width: 100%; height: 26px; font-size: 11px; background: none; border: none; color: var(--text); outline: none; }
+  .pl-desc-inp:focus, .pl-code:focus { background: var(--bg3); border-radius: 4px; padding: 0 4px; }
+  .pl-table input { background: none; border: 1px solid transparent; color: var(--text); border-radius: 4px; padding: 2px 4px; transition: border-color .12s; }
+  .pl-table input:hover { border-color: var(--border2); }
+  .pl-table input:focus { border-color: var(--accent); background: var(--bg3); outline: none; }
+  .pl-desc-inp:focus { background: var(--bg3); border-radius: 4px; padding: 0 4px; }
+  .pl-price-inp { width: 80px; height: 26px; font-size: 12px; text-align: right; }
+  .pl-depr-badge { font-size: 9px; padding: 1px 6px; background: rgba(245,158,11,.15); color: var(--warning); border-radius: 100px; white-space: nowrap; }
+  .pl-stats { font-size: 11px; color: var(--muted); padding: 6px 14px; border-bottom: 1px solid var(--border); display: none; }
+  .pl-stats.visible { display: block; }
+  .pl-stat-badge { display: inline-block; margin-right: 8px; padding: 2px 7px; border-radius: 100px; font-size: 10px; font-weight: 600; }
+  .pl-stat-badge.updated { background: rgba(34,197,94,.15); color: var(--success); }
+  .pl-stat-badge.added { background: rgba(59,130,246,.15); color: var(--accent); }
+  .pl-stat-badge.deprecated { background: rgba(245,158,11,.15); color: var(--warning); }
+</style>
+          <div id="export-status" style="font-size:12px;color:var(--muted);margin-top:8px;display:none"></div>
+        </div>
+
+
+      </div><!-- /RIGHT -->
+
+    </div>
+  </div>
+
+  <!-- ── PRICELIST EDITOR ── -->
+  <div id="pane-pricelist" class="pane">
+
+    <div class="pl-upload-row" style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="font-size:12px;color:var(--muted);flex:1">
+        <strong style="color:var(--text)">Upload new pricelist</strong> —
+        New items will be added, existing prices updated, missing items marked as deprecated (not deleted).
+      </div>
+      <label class="btn primary" style="cursor:pointer">
+        <i class="ti ti-upload"></i> Upload XLSX
+        <input type="file" id="pl-upload-file" accept=".xlsx" style="display:none">
+      </label>
+      <div id="pl-upload-status" style="font-size:12px;color:var(--muted)"></div>
+    </div>
+
+    <div class="pl-stats" id="pl-stats"></div>
+
+    <div class="pl-layout">
+      <div class="pl-sidebar">
+        <div class="pl-sidebar-hdr">
+          Product Groups
+          <button class="btn ghost" onclick="plAddGroup()" title="Add group"
+            style="height:22px;padding:0 6px"><i class="ti ti-plus" style="font-size:13px"></i></button>
+        </div>
+        <div class="pl-group-list" id="pl-group-list"></div>
+      </div>
+      <div class="pl-panel">
+        <div class="pl-panel-hdr">
+          <span class="pl-panel-title" id="pl-panel-title">Select a group</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);cursor:pointer">
+              <input type="checkbox" id="pl-show-deprecated" onchange="plRenderItems()"> Show deprecated
+            </label>
+            <button class="btn primary" onclick="plAddItem()" style="height:28px;font-size:12px">
+              <i class="ti ti-plus"></i> Add item
+            </button>
+          </div>
+        </div>
+        <div id="pl-desc-row" style="display:none;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--bg1)">
+          <!-- Section label -->
+          <div style="margin-bottom:8px">
+            <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px">Section title in Excel export</label>
+            <input type="text" id="pl-grp-section-label-inp" placeholder="e.g. Monitoring and alarming licenses — MultiProbe PRO"
+              style="width:100%;font-size:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px;color:var(--text)"
+              onblur="plSaveGroupSectionLabel(plActiveGroup,this.value)">
+          </div>
+          <!-- Description + Logo side by side -->
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="flex:1">
+              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px">Product description (shown under section title)</label>
+              <textarea id="pl-grp-desc-inp" rows="3" placeholder="Short description of this product..."
+                style="width:100%;font-size:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px;color:var(--text);resize:vertical;font-family:inherit"
+                onblur="plSaveGroupDesc(plActiveGroup,this.value)"></textarea>
+            </div>
+            <!-- Logo upload -->
+            <div style="width:130px;flex-shrink:0">
+              <label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px">Product logo</label>
+              <div id="pl-logo-preview" style="width:120px;height:80px;background:var(--bg2);border:1px dashed var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:6px;overflow:hidden">
+                <span style="font-size:11px;color:var(--muted)" id="pl-logo-placeholder">No logo</span>
+                <img id="pl-logo-img" src="" alt="" style="display:none;max-width:100%;max-height:100%;object-fit:contain">
+              </div>
+              <label class="btn" style="width:100%;justify-content:center;font-size:11px;height:26px;cursor:pointer;box-sizing:border-box">
+                <i class="ti ti-upload" style="font-size:11px"></i> Upload
+                <input type="file" accept="image/*" style="display:none" onchange="plUploadLogo(event, plActiveGroup)">
+              </label>
+              <button class="btn danger" onclick="plDeleteLogo(plActiveGroup)"
+                style="width:100%;justify-content:center;font-size:11px;height:26px;margin-top:4px" id="pl-logo-del-btn">
+                <i class="ti ti-trash" style="font-size:11px"></i> Remove
+              </button>
+            </div>
+          </div>
+        </div>
+        <div style="overflow-y:auto;flex:1">
+          <table class="pl-table" style="width:100%">
+            <thead><tr>
+              <th style="width:90px">Code</th>
+              <th>Description</th>
+              <th style="width:90px;text-align:right">Price</th>
+              <th style="width:60px;text-align:center">Status</th>
+            </tr></thead>
+            <tbody id="pl-items-tbody">
+              <tr><td colspan="4" style="color:var(--muted);padding:16px;text-align:center">Select a product group</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SAVED QUOTATIONS ── -->
+  <div id="pane-saved" class="pane">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <h2 style="margin:0;font-size:16px;font-weight:700;color:var(--text)">Saved Quotations</h2>
+      <input type="text" id="saved-search" placeholder="Search by company, deal ID or contact..."
+        style="flex:1;height:32px;font-size:13px" oninput="savedSearch()">
+      <select id="saved-user-filter" onchange="loadSavedList()" style="height:32px;font-size:12px;max-width:160px">
+        <option value="mine">My quotations</option>
+        <option value="all">All users</option>
+      </select>
+      <button class="btn" onclick="loadSavedList()"><i class="ti ti-refresh"></i> Refresh</button>
+    </div>
+    <div id="saved-list" style="display:flex;flex-direction:column;gap:4px"></div>
+    <div id="saved-versions" style="display:none;margin-top:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <span style="font-size:13px;font-weight:700;color:var(--text)" id="saved-ver-title"></span>
+          <span style="font-size:11px;color:var(--muted);margin-left:8px" id="saved-ver-sub"></span>
+        </div>
+        <button onclick="document.getElementById('saved-versions').style.display='none'"
+          style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px">&times;</button>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="background:var(--bg3)">
+          <th style="text-align:left;padding:6px 10px;color:var(--muted)">Version</th>
+          <th style="text-align:left;padding:6px 10px;color:var(--muted)">Saved</th>
+          <th style="text-align:left;padding:6px 10px;color:var(--muted)">Company</th>
+          <th style="padding:6px 10px"></th>
+        </tr></thead>
+        <tbody id="saved-ver-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── SERVER CONFIGURATION CALCULATOR ── -->
+  <div id="pane-srvcalc" class="pane">
+    <div style="max-width:900px">
+      <h2 style="margin:0 0 4px;font-size:16px;font-weight:700;color:var(--text)">MultiProbe Server Configuration Calculator</h2>
+      <p style="margin:0 0 20px;font-size:12px;color:var(--muted)">Based on Stream Labs internal load testing data. Results are estimates — add 20–25% headroom for production.</p>
+
+      <!-- Input form -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Signal Parameters</div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Resolution</label>
+            <select id="sc-resolution" style="width:100%;height:32px;font-size:13px" onchange="scCalc()">
+              <option value="sd">SD (720×576 / 720×480)</option>
+              <option value="hd25" selected>HD 1080p25 / 1080i50</option>
+              <option value="hd50">HD 1080p50</option>
+              <option value="uhd">UHD 4K (3840×2160)</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Codec</label>
+            <select id="sc-codec" style="width:100%;height:32px;font-size:13px" onchange="scCalc()">
+              <option value="h264" selected>H.264 / AVC</option>
+              <option value="h265">H.265 / HEVC</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Bitrate per channel (Mbps)</label>
+            <input type="number" id="sc-bitrate" value="10" min="1" max="50" step="1"
+              style="width:100%;height:32px;font-size:13px" oninput="scCalc()">
+          </div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Number of channels</label>
+            <input type="number" id="sc-channels" value="50" min="1" max="500" step="1"
+              style="width:100%;height:32px;font-size:13px" oninput="scCalc()">
+          </div>
+
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">When one server isn't enough</label>
+            <select id="sc-strategy" style="width:100%;height:32px;font-size:13px" onchange="scCalc()">
+              <option value="scaleup" selected>Scale up — fewer, more powerful servers</option>
+              <option value="split">Scale out — more servers, smaller each</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Analysis Mode</div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Analysis type</label>
+            <select id="sc-mode" style="width:100%;height:32px;font-size:13px" onchange="scCalc()">
+              <option value="qos">QoS only (TR-290, no decoding)</option>
+              <option value="ref" selected>QoS + QoE by reference frames</option>
+              <option value="full">Full Decoding (QoS + QoE + artifacts)</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:10px">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px">Decoding method (Full Decoding only)</label>
+            <select id="sc-decode" style="width:100%;height:32px;font-size:13px" onchange="scCalc()">
+              <option value="gpu_blackwell" selected>GPU — RTX PRO 4000 Blackwell</option>
+              <option value="gpu_a4000">GPU — RTX A4000</option>
+              <option value="cpu">CPU only</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:10px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer">
+              <input type="checkbox" id="sc-mosaic" checked onchange="scCalc()">
+              Include mosaic display
+            </label>
+          </div>
+
+          <div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer">
+              <input type="checkbox" id="sc-recording" onchange="scCalc()">
+              Include recording (transcoding)
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="sc-result" style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px">Recommended Configuration</div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px" id="sc-cards"></div>
+
+        <div id="sc-detail" style="font-size:12px;color:var(--muted);line-height:1.8;border-top:1px solid var(--border);padding-top:14px"></div>
+
+        <div id="sc-warning" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:var(--radius);font-size:12px;color:#f59e0b"></div>
+
+        <div style="margin-top:16px;display:flex;gap:8px">
+          <button class="btn primary" onclick="scImportToConfigurator()" style="font-size:12px">
+            <i class="ti ti-transfer-in"></i> Import to Configurator
+          </button>
+          <span style="font-size:11px;color:var(--muted);align-self:center">Imports recommended CPU, RAM and GPU to a new server card</span>
+        </div>
+      </div>
+
+      <div id="sc-nodata" style="padding:20px;text-align:center;color:var(--muted);font-size:13px;display:none">
+        ⚠ No test data available for this combination. Try changing parameters.
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="/static/app.js"></script>
+  <!-- ── USERS MODAL ── -->
+  <div id="users-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;width:560px;max-height:85vh;overflow-y:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:15px;font-weight:700;color:var(--text)"><i class="ti ti-users"></i> Users &amp; Assignees</div>
+        <button onclick="closeUsersModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px">&times;</button>
+      </div>
+
+      <div style="display:flex;gap:4px;margin-bottom:14px;border-bottom:1px solid var(--border)">
+        <button id="users-modal-tab-users"      class="btn ghost" onclick="switchUsersModalTab('users')"      style="border:none;border-radius:0;border-bottom:2px solid var(--accent)">Users</button>
+        <button id="users-modal-tab-assignees"  class="btn ghost" onclick="switchUsersModalTab('assignees')"  style="border:none;border-radius:0;border-bottom:2px solid transparent">Jira Assignees</button>
+      </div>
+
+      <!-- ── USERS TAB ── -->
+      <div id="users-modal-panel-users">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px">
+          Login = Jira username. If a personal Jira PAT is set, tasks created while this user is active will be authored under their own account instead of the shared default token.
+          This login is also used to tag/filter saved quotations.
+        </div>
+        <div id="users-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px"></div>
+
+        <div style="border-top:1px solid var(--border);padding-top:12px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Add user</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <input type="text" id="user-new-name"  placeholder="Full name"      style="height:32px;font-size:12px">
+            <input type="text" id="user-new-login" placeholder="Jira login"     style="height:32px;font-size:12px">
+            <input type="text" id="user-new-email" placeholder="Email (optional)" style="height:32px;font-size:12px">
+            <input type="password" id="user-new-token" placeholder="Jira PAT (optional)" style="height:32px;font-size:12px">
+          </div>
+          <button class="btn primary" onclick="addUser()" style="width:100%;justify-content:center"><i class="ti ti-plus"></i> Add user</button>
+        </div>
+      </div>
+
+      <!-- ── ASSIGNEES TAB ── -->
+      <div id="users-modal-panel-assignees" style="display:none">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px">
+          People who can be picked as <b>Assignee</b> when creating a Jira task. Independent from the Users list above — just a name + Jira login.
+        </div>
+        <div id="assignees-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px"></div>
+
+        <div style="border-top:1px solid var(--border);padding-top:12px">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">Add assignee</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <input type="text" id="assignee-new-name"  placeholder="Full name (optional)" style="height:32px;font-size:12px">
+            <input type="text" id="assignee-new-login" placeholder="Jira login"            style="height:32px;font-size:12px">
+          </div>
+          <button class="btn primary" onclick="addAssignee()" style="width:100%;justify-content:center"><i class="ti ti-plus"></i> Add assignee</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── JIRA TASK MODAL ── -->
+  <div id="jira-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;width:600px;max-height:85vh;overflow-y:auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div style="font-size:15px;font-weight:700;color:var(--text)"><i class="ti ti-brand-jira" style="color:var(--accent)"></i> Create Jira Task</div>
+          <div id="jira-modal-title-preview" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
+        </div>
+        <button onclick="closeJiraModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px">&times;</button>
+      </div>
+
+      <!-- Deal ID + Fetch -->
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Pipedrive Deal ID</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" id="jira-deal-id" placeholder="7621" style="flex:1;height:32px;font-size:13px">
+          <button class="btn primary" onclick="jiraFetchPipedrive()" style="height:32px;white-space:nowrap">
+            <i class="ti ti-brand-pipedrive"></i> Fetch
+          </button>
+          <span id="jira-fetch-status" style="font-size:11px;color:var(--muted)"></span>
+        </div>
+      </div>
+
+      <!-- Fetched fields (read-only preview) -->
+      <div id="jira-deal-preview" style="display:none;background:var(--bg3);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.8">
+      </div>
+
+      <!-- Assignee -->
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Assignee</label>
+        <select id="jira-assignee" style="width:100%;height:32px;font-size:13px">
+          <option value="">— unassigned —</option>
+        </select>
+      </div>
+
+      <!-- Context description -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Context / project description <span style="color:var(--muted)">(where the server will be used)</span></label>
+        <textarea id="jira-context" rows="5" placeholder="Describe the project context and where/how the server will be used..."
+          style="width:100%;font-size:12px;background:var(--bg1);border:1px solid var(--border);border-radius:var(--radius);padding:8px;color:var(--text);resize:vertical;font-family:inherit;box-sizing:border-box"
+          oninput="jiraUpdatePreview()"></textarea>
+      </div>
+
+      <!-- Selected servers preview -->
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:6px">Server configuration (from Configurator)</label>
+        <div id="jira-srv-preview" style="font-size:11px;color:var(--muted);background:var(--bg3);border-radius:var(--radius);padding:10px 12px;line-height:1.8"></div>
+      </div>
+
+      <div id="jira-error" style="display:none;color:var(--danger);font-size:12px;margin-bottom:12px;padding:8px 12px;background:rgba(239,68,68,.08);border-radius:var(--radius)"></div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn ghost" onclick="closeJiraModal()">Cancel</button>
+        <button class="btn primary" id="btn-jira-submit" onclick="submitJiraTask()">
+          <i class="ti ti-send"></i> Create Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

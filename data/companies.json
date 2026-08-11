@@ -1,0 +1,22 @@
+[
+  {
+    "id": "streamlabs",
+    "name": "SIA STREAM LABS (EUROPE)",
+    "address": "Siguldas 37, Daugavpils, LV-5417",
+    "vat": "LV41503066927",
+    "email": "info@stream-labs.com",
+    "website": "www.stream-labs.com",
+    "logo": "logo_streamlabs.png",
+    "active": true
+  },
+  {
+    "id": "company_2",
+    "name": "SIA Telestrider",
+    "address": "Tartu street 11-39, Daugavpils, LV-5422, Latvia EU  Phone: +371 6441-5364",
+    "vat": "LV40203385848",
+    "email": "info@telestrider.com",
+    "website": "",
+    "logo": "Dark_logo.png",
+    "active": false
+  }
+]
