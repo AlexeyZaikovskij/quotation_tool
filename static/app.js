@@ -1438,9 +1438,12 @@ function renderProductPicker() {
 }
 
 // ── License sections ──
-function renderLicSections() {
+// Re-rendering rebuilds every section, so entered values are carried over by
+// group index + item code. keep=false starts clean (loading a saved quote).
+function renderLicSections({ keep = true } = {}) {
   const el = document.getElementById("lic-sections");
   if (!el) return;
+  const kept = keep ? snapshotLicState() : {};
   if (!activeProducts.size) {
     el.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px 0">Select one or more products above.</div>';
     return;
@@ -1468,7 +1471,7 @@ function renderLicSections() {
             <button class="lic-qbtn" onclick="adjLicQty('${rid}',1)">+</button>
           </div>
         </td>
-        <td class="num"><input type="number" class="price-inp lic-price" id="${rid}-price" value="${itemPrice}" min="0" oninput="qtCalc()" style="width:78px"></td>
+        <td class="num"><input type="number" class="price-inp lic-price" id="${rid}-price" value="${itemPrice}" data-base="${itemPrice}" min="0" oninput="qtCalc()" style="width:78px"></td>
         <td class="num" id="${rid}-total">$ 0</td>
       </tr>`;
     }).join("");
@@ -1483,7 +1486,34 @@ function renderLicSections() {
         <tbody>${rows}</tbody>
       </table>`;
     el.appendChild(section);
+
+    group.items.forEach((item, iidx) => {
+      const st = kept[`${idx}|${item.code}`];
+      if (!st) return;
+      const rid = `lic-${idx}-${iidx}`;
+      document.getElementById(rid + "-chk").checked = st.checked;
+      document.getElementById(rid + "-qty").value   = st.qty;
+      if (st.price !== null) document.getElementById(rid + "-price").value = st.price;
+      toggleLicRow(rid);
+    });
   });
+}
+
+function snapshotLicState() {
+  const state = {};
+  [...document.querySelectorAll("#lic-sections tr[id^='lic-']")].forEach(row => {
+    const [, gi, ii] = row.id.split("-");
+    const code = pricelist[gi]?.items[ii]?.code;
+    if (code === undefined) return;
+    const price = document.getElementById(row.id + "-price");
+    state[`${gi}|${code}`] = {
+      checked: document.getElementById(row.id + "-chk")?.checked ?? true,
+      qty:     document.getElementById(row.id + "-qty")?.value ?? "0",
+      // Keep only a manually changed price, so a pricelist price edit still shows up
+      price:   price && price.value !== price.dataset.base ? price.value : null,
+    };
+  });
+  return state;
 }
 
 function toggleLicRow(rid) {
@@ -4016,7 +4046,7 @@ async function loadQuotation(dealId,version){
   };
   savedLics.forEach(sg=>{const idx=findGroupIdx(sg);
     if(idx<0)return;activeProducts.add(idx);document.querySelectorAll(".product-chip")[idx]?.classList.add("on");});
-  renderLicSections();
+  renderLicSections({ keep: false });
   await new Promise(r=>setTimeout(r,300));
   document.querySelectorAll(".lic-table input[type=checkbox]").forEach(chk=>{chk.checked=false;});
   savedLics.forEach(sg=>{
