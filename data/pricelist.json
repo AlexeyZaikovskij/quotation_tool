@@ -1091,7 +1091,7 @@
         "price": 650.0
       },
       {
-        "code": "VP5-EVM",
+        "code": "VP5-EAM",
         "desc": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
         "desc_short": "Extension: Emergency Alert Messaging SCTE-18, EWS - per server",
         "price": 420.0
