@@ -2666,6 +2666,22 @@ function plRenderItems() {
   }).join("");
 }
 
+// The Quotation tab keeps its own copy (`pricelist`), loaded once. Mirror in-place
+// edits into it, otherwise quotes and exports keep the old text until a page reload.
+// Both copies come from the same file, so group/item indices match.
+function plSyncQuoteItem(gi, ii, field, val) {
+  const item = pricelist[gi]?.items[ii];
+  if (!item) return;
+  item[field] = val;
+  const row = document.getElementById(`lic-${gi}-${ii}`);
+  if (row && field === "desc_short") row.querySelector("td.desc").textContent = val;
+  if (row && field === "code")       row.querySelector("td.code").textContent = val;
+}
+
+function plSyncQuoteGroup(gi, field, val) {
+  if (pricelist[gi]) pricelist[gi][field] = val;
+}
+
 async function plSaveDesc(gi, ii, val) {
   val = val.trim();
   if (!val || val === plData[gi]?.items[ii]?.desc_short) return;
@@ -2674,6 +2690,7 @@ async function plSaveDesc(gi, ii, val) {
     body: JSON.stringify({ group_idx: gi, item_idx: ii, desc_short: val }),
   });
   if (plData[gi]?.items[ii]) plData[gi].items[ii].desc_short = val;
+  plSyncQuoteItem(gi, ii, "desc_short", val);
 }
 
 async function plSaveCode(gi, ii, val) {
@@ -2684,6 +2701,7 @@ async function plSaveCode(gi, ii, val) {
     body: JSON.stringify({ group_idx: gi, item_idx: ii, code: val }),
   });
   if (plData[gi]?.items[ii]) plData[gi].items[ii].code = val;
+  plSyncQuoteItem(gi, ii, "code", val);
 }
 
 async function plSaveGroupName(gi, val) {
@@ -2694,6 +2712,7 @@ async function plSaveGroupName(gi, val) {
     body: JSON.stringify({ name: val }),
   });
   if (plData[gi]) plData[gi].name = val;
+  plSyncQuoteGroup(gi, "name", val);
   plRenderGroups();
 }
 
@@ -2705,6 +2724,7 @@ async function plSaveGroupAbbrev(gi, val) {
     body: JSON.stringify({ abbrev: val }),
   });
   if (plData[gi]) plData[gi].abbrev = val;
+  plSyncQuoteGroup(gi, "abbrev", val);
   plRenderGroups();
 }
 
@@ -2717,6 +2737,7 @@ async function plSaveGroupDesc(gi, val) {
     body: JSON.stringify({ description: val }),
   });
   if (plData[gi]) plData[gi].description = val;
+  plSyncQuoteGroup(gi, "description", val);
 }
 
 async function plSaveGroupSectionLabel(gi, val) {
@@ -2728,6 +2749,7 @@ async function plSaveGroupSectionLabel(gi, val) {
     body: JSON.stringify({ section_label: val }),
   });
   if (plData[gi]) plData[gi].section_label = val;
+  plSyncQuoteGroup(gi, "section_label", val);
 }
 
 async function plUploadLogo(event, gi) {
@@ -2779,6 +2801,7 @@ async function plSavePrice(gi, ii, val) {
     body: JSON.stringify({ group_idx: gi, item_idx: ii, price }),
   });
   if (plData[gi]?.items[ii]) plData[gi].items[ii].price = price;
+  plSyncQuoteItem(gi, ii, "price", price);
   // Refresh license sections if open
   if (activeProducts.size) { renderLicSections(); qtCalc(); }
 }

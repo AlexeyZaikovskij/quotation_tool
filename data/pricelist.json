@@ -1056,38 +1056,38 @@
       },
       {
         "code": "VP5-AV",
-        "desc": "Output module: SL, Decklink, AJA, DekTec cVRds (12G-SDI/HDMI/Analog/NDI) - per output",
+        "desc": "Output module: SL, Decklink, AJA, DekTec cards (12G-SDI/HDMI/Analog/NDI) - per output",
         "desc_short": "Output module: SL, Decklink, AJA, DekTec cards (12G-SDI/HDMI/Analog/NDI) - per output",
         "price": 520.0
       },
       {
         "code": "VP5-2110",
-        "desc": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per streVM",
-        "desc_short": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per streVM",
+        "desc": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per stream",
+        "desc_short": "Output module: SMPTE-2110 (SDI over IP) via Mellanox ConnectX-5 - per stream",
         "price": 2100.0
       },
       {
         "code": "VP5-UDP",
-        "desc": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per streVM",
-        "desc_short": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per streVM",
+        "desc": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per stream",
+        "desc_short": "Output module: IP TS UDP (H.264, H.256, MPEG-2) - per stream",
         "price": 970.0
       },
       {
         "code": "VP5-WEB",
-        "desc": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per streVM",
-        "desc_short": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per streVM",
+        "desc": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per stream",
+        "desc_short": "Output module: INTERNET (RTSP/RTMP/HLS/MPEG-DASH/SRT) - per stream",
         "price": 970.0
       },
       {
         "code": "VP5-ADV-RX",
-        "desc": "Extension: Detection of DTMF, SCTE-35/104, GPI mVRks & events - per channel",
+        "desc": "Extension: Detection of DTMF, SCTE-35/104, GPI marks & events - per channel",
         "desc_short": "Extension: Detection of DTMF, SCTE-35/104, GPI marks & events - per channel",
         "price": 650.0
       },
       {
         "code": "VP5-ADV-TX",
-        "desc": "Extension: SCTE-35/104 mVRks generation - per streVM / output",
-        "desc_short": "Extension: SCTE-35/104 mVRks generation - per stream / output",
+        "desc": "Extension: SCTE-35/104 marks generation - per stream / output",
+        "desc_short": "Extension: SCTE-35/104 marks generation - per stream / output",
         "price": 650.0
       },
       {
@@ -1098,8 +1098,8 @@
       },
       {
         "code": "VP5-SUB-DVB",
-        "desc": "Extension: Embedding subtitles into UDP TS (PID DVB) streVMs - per each sub.language in 1 channel",
-        "desc_short": "Extension: Embedding subtitles into UDP TS (PID DVB) streVMs - per each sub.language in 1 channel",
+        "desc": "Extension: Embedding subtitles into UDP TS (PID DVB) streams - per each sub.language in 1 channel",
+        "desc_short": "Extension: Embedding subtitles into UDP TS (PID DVB) streams - per each sub.language in 1 channel",
         "price": 2340.0
       },
       {
@@ -1140,19 +1140,19 @@
       },
       {
         "code": "VP5-CLD-STD",
-        "desc": "StandVRd subscription - per SD channel\nIncludes: SD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
-        "desc_short": "StandVRd subscription - per SD channel",
+        "desc": "Standard subscription - per SD channel\nIncludes: SD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc_short": "Standard subscription - per SD channel",
         "price": 280.0
       },
       {
         "code": "VP5-CLD-FULL",
-        "desc": "Full subscription - per HD channel\nIncludes: HD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc": "Full subscription - per HD channel\nIncludes: HD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
         "desc_short": "Full subscription - per HD channel",
         "price": 420.0
       },
       {
         "code": "VP5-CLD-ULTRA",
-        "desc": "Ultra subscription - per UHD/4K channel\nIncludes: UHD channel license (with graphics), 1 output (CVRd/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
+        "desc": "Ultra subscription - per UHD/4K channel\nIncludes: UHD channel license (with graphics), 1 output (Card/IP/WEB), Detection of SCTE-35/104 & generation, Live audio normalization, Remote user connection license + 24/7 support and free updates.",
         "desc_short": "Ultra subscription - per UHD/4K channel",
         "price": 560.0
       },
@@ -1238,8 +1238,8 @@
       },
       {
         "code": "VR5-FILE",
-        "desc": "Additional pVRallel file recorder for sVMe input",
-        "desc_short": "Additional pVRallel file recorder for sVMe input",
+        "desc": "Additional parallel file recorder for same input",
+        "desc_short": "Additional parallel file recorder for same input",
         "price": 700.0
       },
       {
