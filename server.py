@@ -348,6 +348,8 @@ def rename_pricelist_group(gi):
         pl[gi]["abbrev"] = body["abbrev"].strip().upper()
     if "description" in body:
         pl[gi]["description"] = body["description"].strip()
+    if "section_label" in body:
+        pl[gi]["section_label"] = body["section_label"].strip()
     save_json(PRICELIST_FILE, pl)
     return jsonify({"ok": True})
 

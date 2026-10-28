@@ -413,7 +413,8 @@ def generate_xlsx(data: dict, out_path: str) -> str:
 
         lic_hdr_row = r
         # Section header — col headers: Part Number | Qty | Total (no List/Discounted split)
-        sec_label = f"Monitoring and alarming licenses — {lic_group['name']}"
+        sec_label = ((lic_group.get("section_label") or "").strip()
+                     or f"Monitoring and alarming licenses — {lic_group['name']}")
         ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=9)
         ws.cell(r,2).value = sec_label; ws.cell(r,2).font = f_hdr
         ws.cell(r,2).fill = fill_s; ws.cell(r,2).alignment = al_l
@@ -849,9 +850,11 @@ def generate_xlsx(data: dict, out_path: str) -> str:
 
             prev_section_end = sec_end
 
-    # ── Sheet 2: Server Configuration (only if data present) ──
+    # ── Sheet 2: Server Configuration (only if the quote has hardware) ──
+    # The Configurator keeps its servers after hardware rows are removed from the quote,
+    # so server_config alone doesn't mean the client is buying them.
     server_config = data.get("server_config", [])
-    if server_config:
+    if server_config and data.get("hardware"):
         _add_server_config_sheet(wb, server_config)
 
     wb.save(out_path)
