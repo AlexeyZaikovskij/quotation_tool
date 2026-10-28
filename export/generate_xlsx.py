@@ -28,9 +28,16 @@ CHANNEL_CODES = [
 CHANNEL_BUNDLE = re.compile(r"^(MP|SV)-(LITE|REC)-(\d+)$")  # bundle of N channels
 
 
+def is_hardware_group(group):
+    """Hardware sold from the pricelist (HW-DEVICES sheet): no channels, not in Price per channel."""
+    return group.get("abbrev") == "HW" or group.get("sheet") == "HW-DEVICES"
+
+
 def count_channels(licenses):
     total = 0
     for group in licenses:
+        if is_hardware_group(group):
+            continue
         for item in group.get("items", []):
             code = (item.get("code") or "").strip().upper()
             qty  = item.get("qty") or 0
@@ -441,6 +448,7 @@ def generate_xlsx(data: dict, out_path: str) -> str:
     lic_first_hdr   = None   # header row of the first product
     lic_total_start = None   # first row of the shared Total cell
     lic_item_ranges = []     # (sw_start, sw_end) per product, for the shared SUMPRODUCT
+    channel_ranges  = []     # (sw_start, sw_end) of non-hardware products, for Price per channel
 
     for gidx, lic_group in enumerate(lic_groups):
         items = lic_group.get("items", [])
@@ -597,6 +605,8 @@ def generate_xlsx(data: dict, out_path: str) -> str:
             r += 1
 
         sw_end = r - 1
+        if not is_hardware_group(lic_group):
+            channel_ranges.append((sw_start, sw_end))
         total_merge_start = desc_row if desc_row is not None else sw_start
 
         if combine_lic:
@@ -863,9 +873,9 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         ws.row_dimensions[r].height = 15
         r += 1
 
-    # Price per channel = discounted Software / channels. The channel count sits
-    # off-print next to it (amber = editable), like SW Discount %.
-    if channels:
+    # Price per channel = discounted software (hardware products excluded) / channels.
+    # The channel count sits off-print next to it (amber = editable), like SW Discount %.
+    if channels and channel_ranges:
         ws.cell(r, 14).value     = "Channels"
         ws.cell(r, 14).font      = _font(size=8, color=C_MUTED, bold=True)
         ws.cell(r, 14).alignment = al_r
@@ -881,8 +891,8 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         ws.cell(r,11).fill      = fill_n
         ws.cell(r,11).alignment = al_r
         _row_brd(ws, r, 11, 12)
-        sw_row = total_rows["Software:"]
-        _set(ws,(r,13), f"=IFERROR(M{sw_row}/O{r},0)",
+        chan_sw = "+".join(f"SUMPRODUCT(K{a}:K{b},O{a}:O{b})" for a, b in channel_ranges)
+        _set(ws,(r,13), f"=IFERROR(({chan_sw})*(1-SW_DISCOUNT_PCT)/O{r},0)",
              font=_font(size=9, color=C_TEXT), fill=fill_n, border=brd, align=al_r,
              num_fmt=_money_fmt(currency))
         ws.row_dimensions[r].height = 15
