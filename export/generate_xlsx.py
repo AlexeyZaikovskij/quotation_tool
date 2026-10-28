@@ -406,12 +406,21 @@ def generate_xlsx(data: dict, out_path: str) -> str:
     # ────────────────────────────────────────────────────────
     sw_section_total_refs = []
 
-    for lic_group in data.get("licenses", []):
-        if not lic_group.get("items"): continue
+    # Several products → one Total cell for all of them: L:M is merged from the first
+    # product's first row down to the last product's last row, across the headers between.
+    lic_groups   = [g for g in data.get("licenses", []) if g.get("items")]
+    combine_lic  = len(lic_groups) > 1
+    lic_first_hdr   = None   # header row of the first product
+    lic_total_start = None   # first row of the shared Total cell
+    lic_item_ranges = []     # (sw_start, sw_end) per product, for the shared SUMPRODUCT
+
+    for gidx, lic_group in enumerate(lic_groups):
         items = lic_group.get("items", [])
         n_items = len(items)
+        in_shared_total = combine_lic and gidx > 0   # header L:M is covered by the shared Total
 
         lic_hdr_row = r
+        if lic_first_hdr is None: lic_first_hdr = r
         # Section header — col headers: Part Number | Qty | Total (no List/Discounted split)
         sec_label = ((lic_group.get("section_label") or "").strip()
                      or f"Monitoring and alarming licenses — {lic_group['name']}")
@@ -419,11 +428,15 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         ws.cell(r,2).value = sec_label; ws.cell(r,2).font = f_hdr
         ws.cell(r,2).fill = fill_s; ws.cell(r,2).alignment = al_l
         _row_brd(ws, r, 2, 9)
-        ws.merge_cells(start_row=r, start_column=12, end_row=r, end_column=13)
-        for col, lbl in {10:"Part Number", 11:"Q'ty", 12:"Total"}.items():
-            _set(ws, (r,col), lbl, font=f_hdr, fill=fill_s, border=brd, align=al_c)
-        ws.cell(r,13).fill = fill_s
-        ws.cell(r,13).border = brd
+        if in_shared_total:
+            for col, lbl in {10:"Part Number", 11:"Q'ty"}.items():
+                _set(ws, (r,col), lbl, font=f_hdr, fill=fill_s, border=brd, align=al_c)
+        else:
+            ws.merge_cells(start_row=r, start_column=12, end_row=r, end_column=13)
+            for col, lbl in {10:"Part Number", 11:"Q'ty", 12:"Total"}.items():
+                _set(ws, (r,col), lbl, font=f_hdr, fill=fill_s, border=brd, align=al_c)
+            ws.cell(r,13).fill = fill_s
+            ws.cell(r,13).border = brd
         ws.row_dimensions[r].height = 16.5
         r += 1
 
@@ -558,6 +571,11 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         sw_end = r - 1
         total_merge_start = desc_row if desc_row is not None else sw_start
 
+        if combine_lic:
+            if lic_total_start is None: lic_total_start = total_merge_start
+            lic_item_ranges.append((sw_start, sw_end))
+            continue
+
         # Group total — merged L:M across description row (if any) + all item rows
         if n_items > 0:
             ws.merge_cells(start_row=total_merge_start, start_column=12,
@@ -578,6 +596,24 @@ def generate_xlsx(data: dict, out_path: str) -> str:
             sw_section_total_refs.append(disc_cell_ref)
 
         section_blocks.append((lic_hdr_row, sw_end))
+
+    # Shared Total for several products — one merged L:M cell, one SUMPRODUCT per product
+    if combine_lic:
+        s_brd   = Side(style="thin", color=C_BORDER)
+        lic_end = lic_item_ranges[-1][1]
+        ws.merge_cells(start_row=lic_total_start, start_column=12,
+                       end_row=lic_end,           end_column=13)
+        c = ws.cell(lic_total_start, 12)
+        c.value          = "=" + "+".join(f"SUMPRODUCT(K{a}:K{b},O{a}:O{b})" for a, b in lic_item_ranges)
+        c.font           = _font(size=9, color=C_TEXT, bold=False)
+        c.alignment      = _align("right", "center", indent=1)
+        c.number_format  = _money_fmt(currency)
+        c.fill           = fill_n
+        c.border         = Border(left=s_brd, right=s_brd, top=s_brd, bottom=s_brd)
+        ws.cell(lic_end, 13).border = Border(right=s_brd, bottom=s_brd)
+        sw_section_total_refs.append(f"L{lic_total_start}*(1-SW_DISCOUNT_PCT)")
+        # One block, so a page break never splits the shared Total cell
+        section_blocks.append((lic_first_hdr, lic_end))
 
     # ────────────────────────────────────────────────────────
     # ── SERVICES ─────────────────────────────────────────────
