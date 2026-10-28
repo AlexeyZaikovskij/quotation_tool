@@ -323,7 +323,8 @@
         "price": 200.0
       }
     ],
-    "logo": "product_logo_3.png"
+    "logo": "product_logo_3.png",
+    "description": "AirX is an integrated mission-critical playout broadcast automation system that provides complete IP/SDI multi-format flexibility with HDR/UHD/HD/SD support. This video playout solution delivers an end-to-end workflow ecosystem from ingest to compliance recording and media management. The system’s high-density digital server infrastructure ensures rock-solid reliability, further reducing operating expenses while offering high availability."
   },
   {
     "name": "AIRX MEDIA",
@@ -349,7 +350,8 @@
         "price": 2500.0
       }
     ],
-    "logo": "product_logo_4.png"
+    "logo": "product_logo_4.png",
+    "description": "AirX Media is an automated content management system that works closely with AirX Playout Broadcast Automation servers, providing a comprehensive broadcast content management solution. This tool enables TV channel managers to automate the retrieval of schedules, playlists, media assets, and CG production content for playback."
   },
   {
     "name": "AIRX Record",
@@ -411,7 +413,8 @@
         "price": 1300.0
       }
     ],
-    "logo": "product_logo_5.png"
+    "logo": "product_logo_5.png",
+    "description": "AirX Record is a multichannel synchronized ingest and recording solution, ideal for stream recording software applications, and built for all your broadcast or production needs. With its rock-solid reliability and intuitive user interface, AirX Record is a pivotal element in our AirX ecosystem."
   },
   {
     "name": "MultiScreen 5.x",
@@ -782,6 +785,30 @@
         "desc": "WatchDog USB Timer",
         "desc_short": "WatchDog USB Timer",
         "price": 70.0
+      },
+      {
+        "code": "SL-OPT",
+        "desc": "Optical Mediaconverter",
+        "desc_short": "Optical Mediaconverter",
+        "price": 1400.0
+      },
+      {
+        "code": "SL-OPT-CH",
+        "desc": "SL-Optics 1RU chassis for up to 3 SL-OPTICS devices with dual hot-swap redundant PSUs",
+        "desc_short": "SL-Optics 1RU chassis for up to 3 SL-OPTICS devices with dual hot-swap redundant PSUs",
+        "price": 700.0
+      },
+      {
+        "code": "OHP3G-RR10DCRN",
+        "desc": "",
+        "desc_short": "3G-SDI SMF 1260~1610nm 10km Digital Video SFP Dual Channel Optical Receiver Module",
+        "price": 145
+      },
+      {
+        "code": "OHPC3G-xxxx10NCRN",
+        "desc": "",
+        "desc_short": "3G-SDI Video SFP CWDM Dual Channel Optical Transmitters Module (SMF, CWDM 1271~1611nm, 10km, LC, Without DDM, Non-MSA)",
+        "price": 145
       }
     ]
   },
@@ -942,22 +969,23 @@
         "code": "MP-LITE-8",
         "desc": "Basic multiviewer for 8 channels (with 1 year SLA 15%)\nUp to 8 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
         "desc_short": "Basic multiviewer for 8 channels (with 1 year SLA 15%)",
-        "price": null
+        "price": 2300
       },
       {
         "code": "MP-LITE-16",
         "desc": "Basic multiviewer for 16 channels (with 1 year SLA 15%)\nUp to 16 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
         "desc_short": "Basic multiviewer for 16 channels (with 1 year SLA 15%)",
-        "price": null
+        "price": 4370
       },
       {
         "code": "MP-LITE-32",
         "desc": "Basic multiviewer for 32 channels (with 1 year SLA 15%)\nUp to 32 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization of channels with metadata on top of video, One source AV/mosaic encoding.",
         "desc_short": "Basic multiviewer for 32 channels (with 1 year SLA 15%)",
-        "price": null
+        "price": 8280
       }
     ],
-    "logo": "product_logo_13.png"
+    "logo": "product_logo_13.png",
+    "description": "Basic multiviewer for limited number of channels channels \nUp to 32 channels, Not expandable, QoE video analyzer (Black screen, Frozen video, Decodable Video), QoE audio analyzer (Silence, Overall, Decodable Audio), Visualization channels with metadata on top of video, One source AV/mosaic encoding."
   },
   {
     "name": "MultiProbe REC",
@@ -1029,7 +1057,7 @@
       {
         "code": "VP5-AV",
         "desc": "Output module: SL, Decklink, AJA, DekTec cVRds (12G-SDI/HDMI/Analog/NDI) - per output",
-        "desc_short": "Output module: SL, Decklink, AJA, DekTec cVRds (12G-SDI/HDMI/Analog/NDI) - per output",
+        "desc_short": "Output module: SL, Decklink, AJA, DekTec cards (12G-SDI/HDMI/Analog/NDI) - per output",
         "price": 520.0
       },
       {
@@ -1053,13 +1081,13 @@
       {
         "code": "VP5-ADV-RX",
         "desc": "Extension: Detection of DTMF, SCTE-35/104, GPI mVRks & events - per channel",
-        "desc_short": "Extension: Detection of DTMF, SCTE-35/104, GPI mVRks & events - per channel",
+        "desc_short": "Extension: Detection of DTMF, SCTE-35/104, GPI marks & events - per channel",
         "price": 650.0
       },
       {
         "code": "VP5-ADV-TX",
         "desc": "Extension: SCTE-35/104 mVRks generation - per streVM / output",
-        "desc_short": "Extension: SCTE-35/104 mVRks generation - per streVM / output",
+        "desc_short": "Extension: SCTE-35/104 mVRks generation - per stream / output",
         "price": 650.0
       },
       {
@@ -1107,7 +1135,7 @@
       {
         "code": "VP5-MEDIA",
         "desc": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
-        "desc_short": "Extension: Vplay 5.x Integration with AirX Media server - per channel",
+        "desc_short": "Extension: Vplay 5.x Integration with VPlay Media server - per channel",
         "price": 200.0
       },
       {
