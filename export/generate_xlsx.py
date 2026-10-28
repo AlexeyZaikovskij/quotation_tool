@@ -12,6 +12,34 @@ from openpyxl.styles.numbers import FORMAT_NUMBER_COMMA_SEPARATED1
 from openpyxl.worksheet.pagebreak import Break
 from openpyxl.workbook.defined_name import DefinedName
 from datetime import datetime, timedelta
+import re
+
+# ── Channel count for "Price per channel" ────────────────────
+# Only base channel licenses count — "per channel" extensions (CG, R128, ADV-RX, …)
+# are options on a channel already counted. Products are summed, not de-duplicated.
+CHANNEL_CODES = [
+    re.compile(r"^(AX|VP)5-(SD|HD|UHD)$"),              # playout channel license
+    re.compile(r"^(AX|VP)5-CLD-(STD|FULL|ULTRA)$"),     # playout subscription per channel
+    re.compile(r"^(AR|VR)5-(SD|HD|UHD)$"),              # recorder per recording input
+    re.compile(r"^(MP|SV)-(SVQE|EVQE|KVQE)$"),          # QoE video analyzer per video
+    re.compile(r"^MS5-WND$"),                           # MultiScreen window = channel
+    re.compile(r"^MR3-(SPTS|MPTS)$"),                   # MultiRec recorder per stream
+]
+CHANNEL_BUNDLE = re.compile(r"^(MP|SV)-(LITE|REC)-(\d+)$")  # bundle of N channels
+
+
+def count_channels(licenses):
+    total = 0
+    for group in licenses:
+        for item in group.get("items", []):
+            code = (item.get("code") or "").strip().upper()
+            qty  = item.get("qty") or 0
+            bundle = CHANNEL_BUNDLE.match(code)
+            if bundle:
+                total += int(bundle.group(3)) * qty
+            elif any(p.match(code) for p in CHANNEL_CODES):
+                total += qty
+    return total
 
 # ── Style constants ──────────────────────────────────────────
 C_TEXT      = "FF40495A"   # dark slate text
@@ -731,7 +759,8 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         " \u2022 Hardware Warranty \u2013 12 months from date of shipment;"
     )
     show_both  = data.get("show_both", False) and currency == "USD"
-    terms_rows = 5 + (1 if show_both else 0)   # extra row for EUR total
+    channels   = count_channels(data.get("licenses", []))
+    terms_rows = 5 + (1 if show_both else 0) + (1 if channels else 0)   # extra rows: EUR total, price per channel
     terms_r = r
     ws.merge_cells(start_row=r, start_column=2, end_row=r+terms_rows-1, end_column=10)
     ws.cell(r,2).value     = TERMS
@@ -831,6 +860,31 @@ def generate_xlsx(data: dict, out_path: str) -> str:
              font=_font(size=9, color=C_TEXT, bold=True),
              fill=fill_n, border=brd, align=al_r,
              num_fmt=r'#,##0.00\ "€"')
+        ws.row_dimensions[r].height = 15
+        r += 1
+
+    # Price per channel = discounted Software / channels. The channel count sits
+    # off-print next to it (amber = editable), like SW Discount %.
+    if channels:
+        ws.cell(r, 14).value     = "Channels"
+        ws.cell(r, 14).font      = _font(size=8, color=C_MUTED, bold=True)
+        ws.cell(r, 14).alignment = al_r
+        ws.cell(r, 15).value     = channels
+        ws.cell(r, 15).font      = _font(size=10, color=C_TEXT, bold=True)
+        ws.cell(r, 15).fill      = _fill("FFFFF3CD")
+        ws.cell(r, 15).border    = _brd()
+        ws.cell(r, 15).alignment = al_c
+
+        ws.merge_cells(start_row=r, start_column=11, end_row=r, end_column=12)
+        ws.cell(r,11).value     = "Price per channel:"
+        ws.cell(r,11).font      = _font(size=9, color=C_TEXT)
+        ws.cell(r,11).fill      = fill_n
+        ws.cell(r,11).alignment = al_r
+        _row_brd(ws, r, 11, 12)
+        sw_row = total_rows["Software:"]
+        _set(ws,(r,13), f"=IFERROR(M{sw_row}/O{r},0)",
+             font=_font(size=9, color=C_TEXT), fill=fill_n, border=brd, align=al_r,
+             num_fmt=_money_fmt(currency))
         ws.row_dimensions[r].height = 15
         r += 1
     # ── Footer ────────────────────────────────────────────────
