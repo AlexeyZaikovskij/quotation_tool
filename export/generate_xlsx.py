@@ -770,7 +770,7 @@ def generate_xlsx(data: dict, out_path: str) -> str:
     )
     show_both  = data.get("show_both", False) and currency == "USD"
     channels   = count_channels(data.get("licenses", []))
-    terms_rows = 5 + (1 if show_both else 0) + (1 if channels else 0)   # extra rows: EUR total, price per channel
+    terms_rows = 5 + (1 if show_both else 0)   # extra row for EUR total
     terms_r = r
     ws.merge_cells(start_row=r, start_column=2, end_row=r+terms_rows-1, end_column=10)
     ws.cell(r,2).value     = TERMS
@@ -874,29 +874,22 @@ def generate_xlsx(data: dict, out_path: str) -> str:
         r += 1
 
     # Price per channel = discounted software (hardware products excluded) / channels.
-    # The channel count sits off-print next to it (amber = editable), like SW Discount %.
+    # Internal info — off-print (O:P label, Q value), under SW Discount %; the channel
+    # count is amber = editable.
     if channels and channel_ranges:
-        ws.cell(r, 14).value     = "Channels"
-        ws.cell(r, 14).font      = _font(size=8, color=C_MUTED, bold=True)
-        ws.cell(r, 14).alignment = al_r
-        ws.cell(r, 15).value     = channels
-        ws.cell(r, 15).font      = _font(size=10, color=C_TEXT, bold=True)
-        ws.cell(r, 15).fill      = _fill("FFFFF3CD")
-        ws.cell(r, 15).border    = _brd()
-        ws.cell(r, 15).alignment = al_c
-
-        ws.merge_cells(start_row=r, start_column=11, end_row=r, end_column=12)
-        ws.cell(r,11).value     = "Price per channel:"
-        ws.cell(r,11).font      = _font(size=9, color=C_TEXT)
-        ws.cell(r,11).fill      = fill_n
-        ws.cell(r,11).alignment = al_r
-        _row_brd(ws, r, 11, 12)
+        ch_row, ppc_row = sw_disc_row + 1, sw_disc_row + 2
+        for rr, lbl in ((ch_row, "Channels"), (ppc_row, "Price per channel")):
+            ws.merge_cells(start_row=rr, start_column=15, end_row=rr, end_column=16)
+            ws.cell(rr, 15).value     = lbl
+            ws.cell(rr, 15).font      = _font(size=8, color=C_MUTED, bold=True)
+            ws.cell(rr, 15).alignment = al_r
+        c = ws.cell(ch_row, 17)
+        c.value, c.font, c.fill = channels, _font(size=10, color=C_TEXT, bold=True), _fill("FFFFF3CD")
+        c.border, c.alignment = _brd(), al_c
         chan_sw = "+".join(f"SUMPRODUCT(K{a}:K{b},O{a}:O{b})" for a, b in channel_ranges)
-        _set(ws,(r,13), f"=IFERROR(({chan_sw})*(1-SW_DISCOUNT_PCT)/O{r},0)",
-             font=_font(size=9, color=C_TEXT), fill=fill_n, border=brd, align=al_r,
-             num_fmt=_money_fmt(currency))
-        ws.row_dimensions[r].height = 15
-        r += 1
+        c = ws.cell(ppc_row, 17)
+        c.value = f"=IFERROR(({chan_sw})*(1-SW_DISCOUNT_PCT)/Q{ch_row},0)"
+        c.font, c.alignment, c.number_format = _font(size=10, color=C_TEXT, bold=True), al_r, _money_fmt(currency)
     # ── Footer ────────────────────────────────────────────────
     ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=13)
     ws.cell(r,2).value     = "Thank you for your business!"
